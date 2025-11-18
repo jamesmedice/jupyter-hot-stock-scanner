@@ -1,0 +1,13 @@
+pandas
+numpy
+matplotlib
+seaborn
+plotly
+requests
+yfinance
+ipywidgets
+jupyterlab_widgets
+beautifulsoup4
+scikit-learn
+joblib
+tqdm

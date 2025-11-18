@@ -1,0 +1,46 @@
+name: Run Daily HotStock Scanner (02)
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: true   # allow commits
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run notebook 02 with Papermill
+        run: |
+          mkdir -p output
+          papermill "02-daily_stock_recommendations_yahoo.ipynb" \
+            "output/02_run_$(date +'%Y%m%d_%H%M%S').ipynb"
+
+      - name: Commit generated CSV files
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add data/daily/*.csv || true
+          git commit -m "Auto-update: New daily hotstock files" || true
+          git push || true
+
+      - name: Save Notebook Output
+        uses: actions/upload-artifact@v3
+        with:
+          name: output-02
+          path: output/

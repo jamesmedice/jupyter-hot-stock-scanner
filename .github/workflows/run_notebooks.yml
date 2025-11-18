@@ -1,0 +1,46 @@
+name: Run Stock Recommendation Notebooks
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"   # every 30 minutes
+  workflow_dispatch:         # manual run
+
+jobs:
+  run-notebooks:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install jupyter nbconvert
+
+    - name: Run Notebook 02
+      run: |
+        jupyter nbconvert --to notebook --execute 02-daily_stock_recommendations_yahoo.ipynb --output executed_02.ipynb
+
+    - name: Run Notebook 03
+      run: |
+        jupyter nbconvert --to notebook --execute 03-average_stock_recommendations_yahoo.ipynb --output executed_03.ipynb
+
+    - name: Run Notebook 04
+      run: |
+        jupyter nbconvert --to notebook --execute 04-hotscore_stock_recommendations_yahoo.ipynb --output executed_04.ipynb
+
+    - name: Commit output files
+      run: |
+        mkdir -p generated
+        mv executed_*.ipynb generated/
+        git config --global user.name "GitHub Action"
+        git config --global user.email "action@github.com"
+        git add generated/*
+        git commit -m "Auto-run notebooks $(date)" || echo "Nothing to commit"
+        git push

@@ -2,7 +2,7 @@ name: Daily HotStock Scanner
 
 on:
   schedule:
-    - cron: '0,30 14-21 * * 1-5'   # runs every 30 mins during US market hours
+    - cron: "0,30 14-21 * * 1-5"   # every 30 minutes, Mon–Fri
   workflow_dispatch:
 
 jobs:
@@ -10,44 +10,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v4    # ⚠️ updated from v3
+    - name: Checkout
+      uses: actions/checkout@v4
 
     - name: Set up Python
-      uses: actions/setup-python@v5  # ⚠️ updated from v4
+      uses: actions/setup-python@v5
       with:
         python-version: "3.10"
+        cache: "pip"
 
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip wheel setuptools
-        pip install \
-          papermill \
-          jupyter \
-          matplotlib \
-          pandas \
-          yfinance \
-          seaborn \
-          ipywidgets
+        pip install -r requirements.txt
+        pip install papermill
 
-    - name: Run notebook 02
+    - name: Run Notebook 02
       run: |
         mkdir -p output
-        papermill "02-daily_stock_recommendations_yahoo.ipynb" \
-          "output/02_run_$(date +'%Y%m%d_%H%M%S').ipynb"
+        papermill 02-daily_stock_recommendations_yahoo.ipynb \
+          output/02_run_$(date +'%Y%m%d_%H%M%S').ipynb
 
-    - name: Run notebook 03
+    - name: Run Notebook 03
       run: |
-        papermill "03-average_stock_recommendations_yahoo.ipynb" \
-          "output/03_run_$(date +'%Y%m%d_%H%M%S').ipynb"
+        papermill 03-average_stock_recommendations_yahoo.ipynb \
+          output/03_run_$(date +'%Y%m%d_%H%M%S').ipynb
 
-    - name: Run notebook 04
+    - name: Run Notebook 04
       run: |
-        papermill "04-hotscore_stock_recommendations_yahoo.ipynb" \
-          "output/04_run_$(date +'%Y%m%d_%H%M%S').ipynb"
-
-    - name: Upload generated notebook outputs
-      uses: actions/upload-artifact@v4   # ⚠️ MUST be v4 (v3 deprecated)
-      with:
-        name: notebook-outputs
-        path: output/
+        papermill 04-hotscore_stock_recommendations_yahoo.ipynb \
+          output/04_run_$(date +'%Y%m%d_%H%M%S').ipynb

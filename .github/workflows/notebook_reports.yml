@@ -2,7 +2,6 @@ name: Generate Notebook Reports
 
 on:
   schedule:
-    # Every 30 minutes, Mon–Fri (market hours UTC: 14:30–21:00)
     - cron: "*/30 14-21 * * 1-5"
   workflow_dispatch:
 
@@ -11,46 +10,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
+    - uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+        cache: "pip"
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip wheel setuptools
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          pip install jupyter nbconvert matplotlib seaborn yfinance ipywidgets pandas numpy
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install nbconvert jupyter
 
-      - name: Prepare output folders
-        run: |
-          mkdir -p output/reports
+    - name: Convert notebooks to HTML
+      run: |
+        mkdir -p output/reports
+        jupyter nbconvert --to html 02-daily_stock_recommendations_yahoo.ipynb --output output/reports/02-daily.html
+        jupyter nbconvert --to html 03-average_stock_recommendations_yahoo.ipynb --output output/reports/03-average.html
+        jupyter nbconvert --to html 04-hotscore_stock_recommendations_yahoo.ipynb --output output/reports/04-hotscore.html
 
-      - name: Convert notebooks to HTML
-        run: |
-          jupyter nbconvert --to html 02-daily_stock_recommendations_yahoo.ipynb \
-            --output output/reports/02-daily.html
-
-          jupyter nbconvert --to html 03-average_stock_recommendations_yahoo.ipynb \
-            --output output/reports/03-average.html
-
-          jupyter nbconvert --to html 04-hotscore_stock_recommendations_yahoo.ipynb \
-            --output output/reports/04-hotscore.html
-
-      - name: Commit HTML reports
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "actions@github.com"
-
-          git add output/reports/*.html || true
-
-          # commit only if changes exist
-          if ! git diff --cached --quiet; then
-            git commit -m "Update notebook reports [skip ci]"
-            git push
-          else
-            echo "No changes to commit"
-          fi
+    - name: Commit HTML reports
+      run: |
+        git config user.name "github-actions"
+        git config user.email "actions@github.com"
+        git add output/reports/*.html
+        git commit -m "Update HTML reports [skip ci]" || true
+        git push || true

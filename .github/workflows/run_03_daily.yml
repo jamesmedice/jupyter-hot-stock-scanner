@@ -2,7 +2,7 @@ name: Run Average Stock Scanner (03)
 
 on:
   schedule:
-    - cron: "30 23 * * *"   # run daily at 23:30 UTC
+    - cron: "30 23 * * *"   # daily at 23:30 UTC
   workflow_dispatch:
 
 jobs:
@@ -10,45 +10,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          persist-credentials: true
+    - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.10"
+    - uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
+        cache: "pip"
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip wheel setuptools
-          pip install papermill
-          pip install -r requirements.txt
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install papermill
 
-      - name: Run notebook 03
-        run: |
-          mkdir -p output
-          papermill "03-average_stock_recommendations_yahoo.ipynb" \
-            "output/03_run_$(date +'%Y%m%d').ipynb"
+    - name: Run Notebook 03
+      run: |
+        mkdir -p output
+        papermill 03-average_stock_recommendations_yahoo.ipynb \
+          output/03_run_$(date +'%Y%m%d').ipynb
 
-      - name: Commit aggregated CSV files
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "actions@github.com"
+    - name: Commit aggregated CSV files
+      run: |
+        git config user.name "github-actions"
+        git config user.email "actions@github.com"
+        git add data/averages/*.csv || true
+        git commit -m "Auto-update averages [skip ci]" || true
+        git push || true
 
-          git add data/averages/*.csv || true
-
-          # only commit if there are changes
-          if ! git diff --cached --quiet; then
-            git commit -m "Auto-update: New averages"
-            git push
-          else
-            echo "No changes to commit."
-          fi
-
-      - name: Upload notebook output artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: output-03
-          path: output/
+    - uses: actions/upload-artifact@v4
+      with:
+        name: output-03
+        path: output/

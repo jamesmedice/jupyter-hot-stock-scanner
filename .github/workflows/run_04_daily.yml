@@ -35,7 +35,7 @@ jobs:
           git commit -m "Auto-update: HotScore recommendations" || true
           git push || true
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: output-04
           path: output/

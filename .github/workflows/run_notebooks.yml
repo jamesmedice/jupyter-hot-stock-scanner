@@ -3,7 +3,7 @@ name: Run Stock Recommendation Notebooks
 on:
   schedule:
     - cron: "*/30 * * * *"   # every 30 minutes
-  workflow_dispatch:         # manual run
+  workflow_dispatch:
 
 jobs:
   run-notebooks:
@@ -20,27 +20,39 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install -r requirements.txt
-        pip install jupyter nbconvert
+        python -m pip install --upgrade pip wheel setuptools
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        pip install jupyter nbconvert papermill pandas numpy matplotlib seaborn yfinance ipywidgets
+
+    - name: Prepare folders
+      run: mkdir -p generated
 
     - name: Run Notebook 02
       run: |
-        jupyter nbconvert --to notebook --execute 02-daily_stock_recommendations_yahoo.ipynb --output executed_02.ipynb
+        papermill "02-daily_stock_recommendations_yahoo.ipynb" \
+          "generated/02_executed_$(date +'%Y%m%d_%H%M%S').ipynb"
 
     - name: Run Notebook 03
       run: |
-        jupyter nbconvert --to notebook --execute 03-average_stock_recommendations_yahoo.ipynb --output executed_03.ipynb
+        papermill "03-average_stock_recommendations_yahoo.ipynb" \
+          "generated/03_executed_$(date +'%Y%m%d_%H%M%S').ipynb"
 
     - name: Run Notebook 04
       run: |
-        jupyter nbconvert --to notebook --execute 04-hotscore_stock_recommendations_yahoo.ipynb --output executed_04.ipynb
+        papermill "04-hotscore_stock_recommendations_yahoo.ipynb" \
+          "generated/04_executed_$(date +'%Y%m%d_%H%M%S').ipynb"
 
     - name: Commit output files
       run: |
-        mkdir -p generated
-        mv executed_*.ipynb generated/
-        git config --global user.name "GitHub Action"
-        git config --global user.email "action@github.com"
-        git add generated/*
-        git commit -m "Auto-run notebooks $(date)" || echo "Nothing to commit"
-        git push
+        git config user.name "github-actions"
+        git config user.email "actions@github.com"
+
+        git add generated/*.ipynb || true
+
+        # commit only if something changed
+        if ! git diff --cached --quiet; then
+          git commit -m "Auto-run notebooks $(date)"
+          git push
+        else
+          echo "No changes to commit"
+        fi

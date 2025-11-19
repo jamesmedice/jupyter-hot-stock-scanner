@@ -1,0 +1,55 @@
+name: Upload CSVs to Firebase Storage
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install Firebase Admin SDK
+        run: pip install firebase-admin
+
+      - name: Upload CSVs to Firebase Storage
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          STORAGE_BUCKET: tpmedici.appspot.com
+        run: |
+          python - << 'EOF'
+          import os
+          import firebase_admin
+          from firebase_admin import credentials, storage
+
+          # Initialize Firebase
+          cred_json = os.environ['FIREBASE_SERVICE_ACCOUNT']
+          cred = credentials.Certificate(eval(cred_json))
+          app = firebase_admin.initialize_app(cred, {
+              'storageBucket': os.environ['STORAGE_BUCKET']
+          })
+          bucket = storage.bucket(app=app)
+
+          # Upload CSV files from 'data/' folder
+          folders = ['data/daily', 'data/averages', 'data/hotscore']
+          subfolder = "market"
+
+          for folder in folders:
+              if os.path.exists(folder):
+                  for f in os.listdir(folder):
+                      if f.endswith('.csv'):
+                          local_path = os.path.join(folder, f)
+                          blob = bucket.blob(f"{subfolder}/{folder}/{f}")
+                          blob.upload_from_filename(local_path)
+                          print(f"Uploaded {local_path} to {subfolder}/{folder}/{f}")
+          EOF

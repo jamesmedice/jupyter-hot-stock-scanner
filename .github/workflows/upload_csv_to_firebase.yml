@@ -1,4 +1,4 @@
-name: Upload CSVs to Firebase Storage
+name: 6- Upload CSVs to Firebase Storage
 
 on:
   workflow_dispatch:

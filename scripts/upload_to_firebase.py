@@ -1,55 +1,40 @@
+# scripts/upload_to_firebase.py
 import os
 import json
 import glob
-import re
-import datetime
+from pathlib import Path
 import firebase_admin
 from firebase_admin import credentials, storage
 
-# === Configuration ===
-upload_files_without_date = True  # True → always upload files without a date, False → skip them
-
-def init_firebase():
-    cred_info = json.loads(os.environ["FIREBASE_SERVICE_ACCOUNT"])
+def init_bucket():
+    raw = os.environ.get("FIREBASE_SERVICE_ACCOUNT")
+    if not raw:
+        raise RuntimeError("FIREBASE_SERVICE_ACCOUNT empty")
+    cred_info = json.loads(raw)
     cred = credentials.Certificate(cred_info)
-    firebase_admin.initialize_app(cred, {"storageBucket": "tpmedici.appspot.com"})
+    firebase_admin.initialize_app(cred, {"storageBucket":"tpmedici.appspot.com"})
     return storage.bucket()
 
-def upload_folder(bucket, local_pattern, remote_folder="market/"):
-    """Upload files matching local_pattern to Firebase under remote_folder.
-       Only uploads files with yesterday's date or all if flag is True."""
-    
-    yesterday = (datetime.date.today() - datetime.timedelta(days=1)).strftime("%Y%m%d")
-
-    for f in glob.glob(local_pattern, recursive=True):
-        filename = os.path.basename(f)
-        
-        # Extract YYYYMMDD from filename
-        match = re.search(r"(\d{8})", filename)
-        if match:
-            file_date = match.group(1)
-            if file_date != yesterday:
-                continue  # skip files not from yesterday
-        else:
-            if not upload_files_without_date:
-                continue  # skip files without a date
-
-        blob = bucket.blob(remote_folder + filename)
-        blob.upload_from_filename(f)
-        print(f"Uploaded {f} → {remote_folder}{filename}")
+def upload_folder_local(bucket, local_folder, remote_prefix="market/"):
+    local_folder = Path(local_folder)
+    if not local_folder.exists():
+        print(f"Skip, folder not found: {local_folder}")
+        return
+    for f in local_folder.glob("**/*"):
+        if f.is_file():
+            rel = f.relative_to(local_folder)
+            remote_path = f"{remote_prefix}{local_folder.name}/{rel.as_posix()}"
+            blob = bucket.blob(remote_path)
+            blob.upload_from_filename(str(f))
+            print(f"Uploaded {f} -> {remote_path}")
 
 def main():
-    if "FIREBASE_SERVICE_ACCOUNT" not in os.environ:
-        raise Exception("❌ FIREBASE_SERVICE_ACCOUNT is EMPTY!")
-    
-    bucket = init_firebase()
-    
-    # Upload different local folders
-    upload_folder(bucket, "data/averages/*.csv", remote_folder="market/averages/")
-    upload_folder(bucket, "data/daily/*.csv", remote_folder="market/daily/")
-    upload_folder(bucket, "data/hotscore/*.csv", remote_folder="market/hotscore/")
-    upload_folder(bucket, "output/recommendations/*.csv", remote_folder="market/recommendations/")
-    upload_folder(bucket, "output/recommendations/*.png", remote_folder="market/recommendations/")
+    bucket = init_bucket()
+    # upload daily, weekly, monthly if present
+    upload_folder_local(bucket, "output/daily", remote_prefix="market/daily/")
+    upload_folder_local(bucket, "output/weekly", remote_prefix="market/weekly/")
+    upload_folder_local(bucket, "output/monthly", remote_prefix="market/monthly/")
+    upload_folder_local(bucket, "output/recommendations", remote_prefix="market/recommendations/")
 
 if __name__ == "__main__":
     main()

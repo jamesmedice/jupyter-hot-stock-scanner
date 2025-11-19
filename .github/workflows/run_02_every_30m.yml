@@ -2,7 +2,7 @@ name: 2 - Run Daily HotStock Scanner
 
 on:
   schedule:
-    - cron: "*/30 14-21 * * 1-5"  # every 30 min, Mon–Fri UTC market hours
+    - cron: "*/15 14-21 * * 1-5"  # every 15 min, Mon–Fri UTC market hours
   workflow_dispatch:
 
 jobs:

@@ -1,6 +1,8 @@
 name: 6 - Upload CSVs to Firebase Storage
 
 on:
+  schedule:
+    - cron: "0 10 * * *" 
   workflow_dispatch:
 
 jobs:

@@ -27,33 +27,33 @@ jobs:
       - name: Upload CSVs to Firebase Storage
         run: |
           python - <<'END'
-import os
-import json
-import glob
-import firebase_admin
-from firebase_admin import credentials, storage
+                    import os
+                    import json
+                    import glob
+                    import firebase_admin
+                    from firebase_admin import credentials, storage
 
-cred_json = os.environ['FIREBASE_SERVICE_ACCOUNT']
-cred = credentials.Certificate(json.loads(cred_json))
+                    cred_json = os.environ['FIREBASE_SERVICE_ACCOUNT']
+                    cred = credentials.Certificate(json.loads(cred_json))
 
-firebase_admin.initialize_app(cred, {
-    'storageBucket': 'tpmedici.appspot.com'
-})
+                    firebase_admin.initialize_app(cred, {
+                        'storageBucket': 'tpmedici.appspot.com'
+                    })
 
-bucket = storage.bucket()
-folder = 'market/'
+                    bucket = storage.bucket()
+                    folder = 'market/'
 
-paths = [
-    'data/averages/*.csv',
-    'data/hotscore/*.csv',
-    'output/recommendations/*.csv'
-]
+                    paths = [
+                        'data/averages/*.csv',
+                        'data/hotscore/*.csv',
+                        'output/recommendations/*.csv'
+                    ]
 
-for pattern in paths:
-    for f in glob.glob(pattern):
-        blob = bucket.blob(folder + os.path.basename(f))
-        blob.upload_from_filename(f)
-        print(f"Uploaded {f} to {folder}{os.path.basename(f)}")
-END
+                    for pattern in paths:
+                        for f in glob.glob(pattern):
+                            blob = bucket.blob(folder + os.path.basename(f))
+                            blob.upload_from_filename(f)
+                            print(f"Uploaded {f} to {folder}{os.path.basename(f)}")
+          END
         env:
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}

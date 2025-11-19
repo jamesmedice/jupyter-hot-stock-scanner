@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HotStock Dashboard</title>
+
+    <!-- Latest Plotly -->
+    <script src="https://cdn.plot.ly/plotly-2.26.1.min.js"></script>
+
+    <!-- Optional styling -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        select, button { padding: 5px; margin: 5px; }
+        #charts { display: flex; flex-wrap: wrap; gap: 20px; }
+        .chart { flex: 1 1 600px; min-width: 300px; }
+        table { border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ccc; padding: 5px; text-align: center; }
+        th { background-color: #f0f0f0; }
+    </style>
+</head>
+<body>
+
+<h1>HotStock Dashboard</h1>
+
+<label for="dateSelect">Select Date:</label>
+<select id="dateSelect">
+    <option value="">Loading...</option>
+</select>
+
+<button id="loadBtn">Load Data</button>
+
+<div id="charts">
+    <div id="hotscoreChart" class="chart"></div>
+    <div id="topTable" class="chart"></div>
+</div>
+
+<script>
+async function fetchCSV(path) {
+    try {
+        const resp = await fetch(path);
+        if (!resp.ok) throw new Error("File not found: " + path);
+        const text = await resp.text();
+        const rows = text.trim().split("\n").map(r => r.split(","));
+        const headers = rows.shift();
+        return rows.map(r => Object.fromEntries(r.map((v,i) => [headers[i],v])));
+    } catch(e) {
+        console.error(e);
+        return [];
+    }
+}
+
+// Auto-detect available CSV dates (replace with actual file list or JSON)
+const availableDates = [
+    "20251119_0930",
+    "20251119_1000",
+    "20251119_1030"
+];
+const dateSelect = document.getElementById("dateSelect");
+dateSelect.innerHTML = availableDates.map(d => `<option value="${d}">${d}</option>`).join("");
+
+document.getElementById("loadBtn").addEventListener("click", async () => {
+    const date = dateSelect.value;
+    if (!date) return alert("Select a date first.");
+
+    // Load CSV files
+    const hotstocks = await fetchCSV(`data/daily/hot_stocks_${date}.csv`);
+    const averages = await fetchCSV(`data/averages/avg_${date}.csv`);
+    const hotscore = await fetchCSV(`data/hotscore/hotscore_${date}.csv`);
+
+    // Example: HotScore bar chart
+    const symbols = hotscore.map(r => r.symbol);
+    const scores = hotscore.map(r => parseFloat(r.HotScore));
+
+    Plotly.newPlot('hotscoreChart', [{
+        x: symbols,
+        y: scores,
+        type: 'bar',
+        marker: { color: 'orange' }
+    }], {
+        title: `HotScore Top Symbols - ${date}`,
+        xaxis: { title: "Symbol" },
+        yaxis: { title: "HotScore" }
+    });
+
+    // Example: Top table (from averages)
+    const topTableDiv = document.getElementById("topTable");
+    topTableDiv.innerHTML = "<h3>Top Averages</h3>";
+    if (averages.length) {
+        const table = document.createElement("table");
+        const headerRow = `<tr>${Object.keys(averages[0]).map(h => `<th>${h}</th>`).join("")}</tr>`;
+        table.innerHTML = headerRow + averages.slice(0,20).map(r => 
+            `<tr>${Object.values(r).map(v => `<td>${v}</td>`).join("")}</tr>`
+        ).join("");
+        topTableDiv.appendChild(table);
+    } else {
+        topTableDiv.innerHTML += "<p>No average data found.</p>";
+    }
+});
+</script>
+
+</body>
+</html>

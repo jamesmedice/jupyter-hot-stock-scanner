@@ -1,4 +1,4 @@
-name: Run Average Stock Scanner (03)
+name: 3- Run Average Stock Scanner
 
 on:
   schedule:

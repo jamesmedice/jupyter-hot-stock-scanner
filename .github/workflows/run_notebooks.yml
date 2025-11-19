@@ -1,4 +1,4 @@
-name: Run Stock Recommendation Notebooks
+name: 5 - Run Stock Recommendation Notebooks
 
 on:
   schedule:

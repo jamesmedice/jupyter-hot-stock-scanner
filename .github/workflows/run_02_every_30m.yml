@@ -1,4 +1,4 @@
-name: Run Daily HotStock Scanner (02)
+name: 2 - Run Daily HotStock Scanner
 
 on:
   schedule:

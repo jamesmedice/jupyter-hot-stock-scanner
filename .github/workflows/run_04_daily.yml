@@ -1,4 +1,4 @@
-name: Run HotScore Trend + Buy Recommendations (04)
+name: 4 - Run HotScore Trend + Buy Recommendations
 
 on:
   schedule:

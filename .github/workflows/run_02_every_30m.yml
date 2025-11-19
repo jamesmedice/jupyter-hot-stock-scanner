@@ -1,43 +1,40 @@
-name: Daily HotStock Scanner
+name: Run Daily HotStock Scanner (02)
 
 on:
   schedule:
-    - cron: "0,30 14-21 * * 1-5"   # every 30 minutes, Mon–Fri
+    - cron: "*/30 14-21 * * 1-5"  # every 30 min, Mon–Fri UTC market hours
   workflow_dispatch:
 
 jobs:
-  run-notebooks:
+  run:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 1
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: "3.10"
-        cache: "pip"
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
 
-    - name: Install dependencies
-      run: |
-        pip install -r requirements.txt
-        pip install papermill
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install jupyter ipykernel papermill
 
-    - name: Run Notebook 02
-      run: |
-        mkdir -p output
-        papermill 02-daily_stock_recommendations_yahoo.ipynb \
-          output/02_run_$(date +'%Y%m%d_%H%M%S').ipynb
+      - name: Install Jupyter kernel
+        run: |
+          python -m ipykernel install --user --name python3
 
-    - name: Run Notebook 03
-      run: |
-        papermill 03-average_stock_recommendations_yahoo.ipynb \
-          output/03_run_$(date +'%Y%m%d_%H%M%S').ipynb
+      - name: Run notebook 02
+        run: |
+          mkdir -p output
+          papermill "02-daily_stock_recommendations_yahoo.ipynb" \
+            "output/02_run_$(date +'%Y%m%d_%H%M').ipynb"
 
-    - name: Run Notebook 04
-      run: |
-        papermill 04-hotscore_stock_recommendations_yahoo.ipynb \
-          output/04_run_$(date +'%Y%m%d_%H%M%S').ipynb
+      - name: Upload output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-02
+          path: output/

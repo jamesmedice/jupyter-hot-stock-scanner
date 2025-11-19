@@ -1,4 +1,4 @@
-name: 3- Run Average Stock Scanner
+name: 3 - Run Average Stock Scanner
 
 on:
   schedule:
@@ -22,7 +22,11 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
-        pip install papermill
+        pip install papermill ipykernel jupyter
+
+    - name: Install Jupyter kernel
+      run: |
+        python -m ipykernel install --user --name python3
 
     - name: Run Notebook 03
       run: |

@@ -22,7 +22,11 @@ jobs:
     - name: Install requirements
       run: |
         pip install -r requirements.txt
-        pip install papermill
+        pip install papermill ipykernel jupyter
+
+    - name: Install Jupyter kernel
+      run: |
+        python -m ipykernel install --user --name python3
 
     - name: Run Notebook 04
       run: |

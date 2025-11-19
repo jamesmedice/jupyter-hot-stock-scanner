@@ -10,7 +10,7 @@ def init_firebase():
     firebase_admin.initialize_app(cred, {"storageBucket": "tpmedici.appspot.com"})
     return storage.bucket()
 
-def upload_folder(bucket, local_pattern, subfolder="data/averages", remote_folder="market/"):
+def upload_folder(bucket, local_pattern, remote_folder="market/"):
     """Upload all files matching local_pattern to Firebase under remote_folder"""
     for f in glob.glob(local_pattern, recursive=True):
         filename = os.path.basename(f)
@@ -24,11 +24,11 @@ def main():
     bucket = init_firebase()
     
     # Upload different local folders
-    upload_folder(bucket, "data/averages/*.csv", subfolder="data/averages/")
-    upload_folder(bucket, "data/daily/*.csv", subfolder="data/daily/")
-    upload_folder(bucket, "data/hotscore/*.csv", subfolder="data/hotscore/")
-    upload_folder(bucket, "output/recommendations/*.csv", subfolder="output/recommendations/")
-    upload_folder(bucket, "output/reports/*.png", subfolder="output/reports/")
+    upload_folder(bucket, "data/averages/*.csv", remote_folder="market/averages/")
+    upload_folder(bucket, "data/daily/*.csv", remote_folder="market/daily/")
+    upload_folder(bucket, "data/hotscore/*.csv", remote_folder="market/hotscore/")
+    upload_folder(bucket, "output/recommendations/*.csv", remote_folder="market/recommendations/")
+    upload_folder(bucket, "output/reports/*.png", remote_folder="market/reports/")
 
 if __name__ == "__main__":
     main()

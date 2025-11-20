@@ -31,10 +31,10 @@ def upload_folder_local(bucket, local_folder, remote_prefix="market/"):
 def main():
     bucket = init_bucket()
     # upload daily, weekly, monthly if present
-    upload_folder_local(bucket, "output/daily", remote_prefix="market/daily/")
-    upload_folder_local(bucket, "output/weekly", remote_prefix="market/weekly/")
-    upload_folder_local(bucket, "output/monthly", remote_prefix="market/monthly/")
-    upload_folder_local(bucket, "output/recommendations", remote_prefix="market/recommendations/")
+    upload_folder_local(bucket, "output/daily", remote_prefix="market/")
+    upload_folder_local(bucket, "output/weekly", remote_prefix="market/")
+    upload_folder_local(bucket, "output/monthly", remote_prefix="market/")
+    upload_folder_local(bucket, "output/recommendations", remote_prefix="market/")
 
 if __name__ == "__main__":
     main()

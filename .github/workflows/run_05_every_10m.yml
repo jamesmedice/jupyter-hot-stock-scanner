@@ -51,7 +51,7 @@ jobs:
             echo "✅ FIREBASE_SERVICE_ACCOUNT secret is present"
           fi
 
-      - name: Upload CSVs to Firebase
+      - name: Upload Runtime to Firebase
         env:
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
         run: python scripts/upload_runtime_to_firebase.py

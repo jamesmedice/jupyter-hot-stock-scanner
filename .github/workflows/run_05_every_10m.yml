@@ -27,7 +27,7 @@ jobs:
         run: |
           python -m ipykernel install --user --name python3
 
-      - name: Run notebook 02
+      - name: Run notebook 05
         run: |
           mkdir -p output
           papermill "05_runtime_radar.ipynb" \

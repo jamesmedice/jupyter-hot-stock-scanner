@@ -1,4 +1,4 @@
-name: 5 - Run Daily HotStock Scanner
+name: 5 - Run Radar HotStock Scanner
 
 on:
   schedule:

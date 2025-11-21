@@ -1,0 +1,40 @@
+name: 5 - Run Daily HotStock Scanner
+
+on:
+  schedule:
+    - cron: "*/10 14-22 * * 1-5"  # every 15 min, Mon–Fri UTC market hours
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install jupyter ipykernel papermill
+
+      - name: Install Jupyter kernel
+        run: |
+          python -m ipykernel install --user --name python3
+
+      - name: Run notebook 02
+        run: |
+          mkdir -p output
+          papermill "05_runtime_radar.ipynb" \
+            "output/05_run_$(date +'%Y%m%d_%H%M').ipynb"
+
+      - name: Upload output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-05
+          path: output/

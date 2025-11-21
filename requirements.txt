@@ -11,3 +11,4 @@ beautifulsoup4
 scikit-learn
 joblib
 tqdm
+firebase_admin

@@ -2,7 +2,7 @@ name: 3 - Run Average Stock Scanner
 
 on:
   schedule:
-    - cron: "30 23 * * *"   # daily at 23:30 UTC
+    - cron: "30 22 * * 1-5"   # daily at 22:30 UTC
   workflow_dispatch:
 
 jobs:

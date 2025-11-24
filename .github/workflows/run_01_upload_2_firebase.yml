@@ -1,4 +1,4 @@
-name: 6 - Upload outcome to Firebase Storage
+name: 1 - Upload outcome to Firebase Storage
 
 on:
   schedule:

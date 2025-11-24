@@ -1,0 +1,10 @@
+{
+  "date": "20251124",
+  "files": {
+    "average_csv": "data\\averages\\average_hot_scores.csv",
+    "persistent_csv": "data\\averages\\persistent_hot_stocks.csv",
+    "top20_avg_png": "output\\weekly\\top20_avg_20251124.png",
+    "top20_movers_png": "output\\weekly\\top20_movers_20251124.png",
+    "html_report": "output\\weekly\\weekly_report_20251124.html"
+  }
+}

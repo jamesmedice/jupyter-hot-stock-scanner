@@ -1,0 +1,10 @@
+{
+  "date": "20251124",
+  "timestamp": "20251124102006",
+  "top_symbols_count": 14,
+  "files": {
+    "trade_suggestions_csv": "output\\recommendations\\trade_suggestions_20251124102013.csv",
+    "heatmap_png": "output\\recommendations\\heatmap_hotscore_20251124.png",
+    "html_report": "output\\recommendations\\daily_report_20251124.html"
+  }
+}

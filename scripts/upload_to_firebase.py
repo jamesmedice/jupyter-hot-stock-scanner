@@ -20,6 +20,32 @@ def upload_folder_local(bucket, local_folder, remote_prefix="market/"):
     if not local_folder.exists():
         print(f"Skip, folder not found: {local_folder}")
         return
+
+    # Allowed upload extensions
+    allowed_ext = {".png", ".html"}   # ← upload only these
+
+    for f in local_folder.glob("**/*"):
+        if not f.is_file():
+            continue
+
+        # Skip unwanted files
+        if f.suffix.lower() not in allowed_ext:
+            # Uncomment to log skipped files:
+            # print(f"Skipping {f} (extension not allowed)")
+            continue
+
+        rel = f.relative_to(local_folder)
+        remote_path = f"{remote_prefix}{local_folder.name}/{rel.as_posix()}"
+        blob = bucket.blob(remote_path)
+        blob.upload_from_filename(str(f))
+        print(f"Uploaded {f} -> {remote_path}")
+
+
+def upload_folder_local_deprecated(bucket, local_folder, remote_prefix="market/"):
+    local_folder = Path(local_folder)
+    if not local_folder.exists():
+        print(f"Skip, folder not found: {local_folder}")
+        return
     for f in local_folder.glob("**/*"):
         if f.is_file():
             rel = f.relative_to(local_folder)

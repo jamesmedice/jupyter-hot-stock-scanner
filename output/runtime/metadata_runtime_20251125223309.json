@@ -1,0 +1,20 @@
+{
+  "timestamp": "20251125223309",
+  "count": 10,
+  "top_symbols": [
+    "BLTE",
+    "GRAL",
+    "LITE",
+    "MOG-A",
+    "PODD",
+    "ROST",
+    "HTFL",
+    "RH",
+    "OSIS",
+    "ADPT"
+  ],
+  "files": {
+    "csv": "output\\runtime\\runtime_suggestions_20251125223309.csv",
+    "chart": "output\\runtime\\runtime_top20_20251125223309.png"
+  }
+}

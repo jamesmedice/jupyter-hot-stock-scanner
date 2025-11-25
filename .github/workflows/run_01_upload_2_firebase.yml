@@ -37,4 +37,4 @@ jobs:
       - name: Upload CSVs to Firebase
         env:
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-        run: python scripts/upload_to_firebase.py
+        run: python scripts/upload_daily_firebase.py

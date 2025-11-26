@@ -57,7 +57,7 @@ jobs:
       # --------------------------------------------------
       - name: Run 03 - Combined Predict
         run: |
-          papermill "03-Combined-DailyTrend-Predict.ipynb" \
+          papermill "03-average_stock_recommendations_yahoo.ipynb" \
             "output/run_03_$(date +'%Y%m%d_%H%M').ipynb"
 
       # --------------------------------------------------
@@ -65,7 +65,7 @@ jobs:
       # --------------------------------------------------
       - name: Run 04 - HotScore Trend
         run: |
-          papermill "04_hotscore_trend.ipynb" \
+          papermill "04-hotscore_stock_recommendations_yahoo.ipynb" \
             "output/run_04_$(date +'%Y%m%d_%H%M').ipynb"
 
       # --------------------------------------------------

@@ -74,15 +74,6 @@ jobs:
             "output/run_06_$(date +'%Y%m%d_%H%M').ipynb"
 
       # --------------------------------------------------
-      # Optional Firebase Upload (you already have it)
-      # --------------------------------------------------
-      - name: Upload Firebase Data
-        env:
-          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-        run: |
-          python scripts/upload_2_firebase.py
-
-      # --------------------------------------------------
       # COMMIT OUTPUTS BACK TO GITHUB
       # --------------------------------------------------
       - name: Commit updated output & data folders

@@ -1,4 +1,4 @@
-name: 1 - Upload outcome to Firebase Storage
+name: 1 - Upload Daily Reports
 
 on:
   schedule:

@@ -45,6 +45,7 @@ jobs:
           mkdir -p data/daily
           mkdir -p data/averages
           mkdir -p data/hotscore
+          mkdir -p data/runtime
           
 
       # --------------------------------------------------

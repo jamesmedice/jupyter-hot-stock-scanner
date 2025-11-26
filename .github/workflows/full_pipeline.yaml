@@ -1,0 +1,83 @@
+name: Full HotStock Pipeline
+
+on:
+  schedule:
+    - cron: "*/10 14-22 * * 1-5"
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install jupyter ipykernel papermill firebase-admin
+
+      - name: Install kernel
+        run: python -m ipykernel install --user --name python3
+
+      # --------------------------------------
+      # (1) RUN NOTEBOOK 02
+      # --------------------------------------
+      - name: Run 02 - Daily Yahoo Scanner
+        run: |
+          papermill "02-daily_stock_recommendations_yahoo.ipynb" \
+            "output/run_02_$(date +'%Y%m%d_%H%M').ipynb"
+
+      # --------------------------------------
+      # (2) RUN NOTEBOOK 03
+      # --------------------------------------
+      - name: Run 03 - Combined Predict
+        run: |
+          papermill "03-Combined-DailyTrend-Predict.ipynb" \
+            "output/run_03_$(date +'%Y%m%d_%H%M').ipynb"
+
+      # --------------------------------------
+      # (3) RUN NOTEBOOK 04
+      # --------------------------------------
+      - name: Run 04 - HotScore Trend
+        run: |
+          papermill "04_hotscore_trend.ipynb" \
+            "output/run_04_$(date +'%Y%m%d_%H%M').ipynb"
+
+      # --------------------------------------
+      # (4) RUN NOTEBOOK 05
+      # --------------------------------------
+      - name: Run 05 - Runtime Radar
+        run: |
+          papermill "05_runtime_radar.ipynb" \
+            "output/run_05_$(date +'%Y%m%d_%H%M').ipynb"
+
+      # --------------------------------------
+      # (5) RUN NOTEBOOK 06
+      # --------------------------------------
+      - name: Run 06 - Hourly Trend
+        run: |
+          papermill "06_hourly_trend.ipynb" \
+            "output/run_06_$(date +'%Y%m%d_%H%M').ipynb"
+
+      # --------------------------------------
+      # Upload runtime & daily data to Firebase
+      # --------------------------------------
+      - name: Upload Firebase Data
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          python scripts/upload_2_firebase.py
+
+      # Optional: Save notebook runs as artifacts
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-pipeline-runs
+          path: output/

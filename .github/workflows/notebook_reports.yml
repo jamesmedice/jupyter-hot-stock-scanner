@@ -2,7 +2,7 @@ name: 1 - Generate Notebook Reports
 
 on:
   schedule:
-    - cron: "*/30 14-21 * * 1-5"
+    - cron: "*/30 14-21 * * 1-5"   # every 30 minutes during market hours
   workflow_dispatch:
 
 jobs:
@@ -27,9 +27,26 @@ jobs:
     - name: Convert notebooks to HTML
       run: |
         mkdir -p output/reports
-        jupyter nbconvert --to html 02-daily_stock_recommendations_yahoo.ipynb --output output/reports/02-daily.html
-        jupyter nbconvert --to html 03-average_stock_recommendations_yahoo.ipynb --output output/reports/03-average.html
-        jupyter nbconvert --to html 04-hotscore_stock_recommendations_yahoo.ipynb --output output/reports/04-hotscore.html
+
+        jupyter nbconvert --to html \
+          02-daily_stock_recommendations_yahoo.ipynb \
+          --output output/reports/02-daily.html
+
+        jupyter nbconvert --to html \
+          03-Combined-DailyTrend-Predict.ipynb \
+          --output output/reports/03-combined.html
+
+        jupyter nbconvert --to html \
+          04_hotscore_trend.ipynb \
+          --output output/reports/04-hotscore.html
+
+        jupyter nbconvert --to html \
+          05_runtime_radar.ipynb \
+          --output output/reports/05-radar.html
+
+        jupyter nbconvert --to html \
+          06_hourly_trend.ipynb \
+          --output output/reports/06-hourly.html
 
     - name: Commit HTML reports
       run: |

@@ -1,57 +1,98 @@
-name: Generate Notebook Reports
+name: Full HotStock Pipeline
 
 on:
   schedule:
-    - cron: "*/30 14-21 * * 1-5"   # every 30 minutes during market hours
+    - cron: "*/10 14-22 * * 1-5"
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  run:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 1
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
-    - uses: actions/setup-python@v5
-      with:
-        python-version: "3.12"
-        cache: "pip"
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
 
-    - name: Install dependencies
-      run: |
-        pip install -r requirements.txt
-        pip install nbconvert jupyter
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install jupyter ipykernel papermill firebase-admin
 
-    - name: Convert notebooks to HTML
-      run: |
-        mkdir -p output/reports
+      - name: Install Jupyter Kernel
+        run: python -m ipykernel install --user --name python3
 
-        jupyter nbconvert --to html \
-          02-daily_stock_recommendations_yahoo.ipynb \
-          --output output/reports/02-daily.html
+      # --------------------------------------------------
+      # RUN ALL NOTEBOOKS — they create CSV/PNG output
+      # --------------------------------------------------
+      - name: Create required folders
+        run: |
+          mkdir -p output
+          mkdir -p output/hotscore
+          mkdir -p output/hotstocks
+          mkdir -p output/volumespike
+          mkdir -p output/momentum
+          mkdir -p output/recommendations
+          mkdir -p output/top20
+          mkdir -p output/runtime
+          mkdir -p output/hourly
+          mkdir -p data
+          mkdir -p data/daily
+          mkdir -p data/averages
+          mkdir -p data/hotscore
 
-        jupyter nbconvert --to html \
-          03-Combined-DailyTrend-Predict.ipynb \
-          --output output/reports/03-combined.html
+      - name: Run 02
+        run: |
+          mkdir -p output
+          papermill "02-daily_stock_recommendations_yahoo.ipynb" \
+            "output/run_02_$(date +'%Y%m%d_%H%M').ipynb"
 
-        jupyter nbconvert --to html \
-          04_hotscore_trend.ipynb \
-          --output output/reports/04-hotscore.html
+      - name: Run 03
+        run: |
+          papermill "03-Combined-DailyTrend-Predict.ipynb" \
+            "output/run_03_$(date +'%Y%m%d_%H%M').ipynb"
 
-        jupyter nbconvert --to html \
-          05_runtime_radar.ipynb \
-          --output output/reports/05-radar.html
+      - name: Run 04
+        run: |
+          papermill "04_hotscore_trend.ipynb" \
+            "output/run_04_$(date +'%Y%m%d_%H%M').ipynb"
 
-        jupyter nbconvert --to html \
-          06_hourly_trend.ipynb \
-          --output output/reports/06-hourly.html
+      - name: Run 05
+        run: |
+          papermill "05_runtime_radar.ipynb" \
+            "output/run_05_$(date +'%Y%m%d_%H%M').ipynb"
 
-    - name: Commit HTML reports
-      run: |
-        git config user.name "github-actions"
-        git config user.email "actions@github.com"
-        git add output/reports/*.html
-        git commit -m "Update HTML reports [skip ci]" || true
-        git push || true
+      - name: Run 06
+        run: |
+          papermill "06_hourly_trend.ipynb" \
+            "output/run_06_$(date +'%Y%m%d_%H%M').ipynb"
+
+      # --------------------------------------------------
+      # Optional Firebase Upload (you already have it)
+      # --------------------------------------------------
+      - name: Upload Firebase Data
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          python scripts/upload_2_firebase.py
+
+      # --------------------------------------------------
+      # COMMIT OUTPUTS BACK TO GITHUB
+      # --------------------------------------------------
+      - name: Commit updated output & data folders
+        run: |
+          git config user.name "jamesmedice"
+          git config user.email "tiago.sllater@github.com"
+
+          # Add anything produced by the notebooks
+          git add output/ data/ || true
+          git commit -m "Update pipeline output [skip ci]" || true
+          
+          git pull --rebase || true
+          git push || true

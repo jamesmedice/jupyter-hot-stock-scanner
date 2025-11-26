@@ -80,14 +80,6 @@ jobs:
             "output/run_05_$(date +'%Y%m%d_%H%M').ipynb"
 
       # --------------------------------------------------
-      # (5) RUN NOTEBOOK 06
-      # --------------------------------------------------
-      - name: Run 06 - Hourly Trend
-        run: |
-          papermill "06_hourly_trend.ipynb" \
-            "output/run_06_$(date +'%Y%m%d_%H%M').ipynb"
-
-      # --------------------------------------------------
       # Upload to Firebase
       # --------------------------------------------------
       - name: Upload Firebase Data
@@ -103,3 +95,20 @@ jobs:
         with:
           name: full-pipeline-runs
           path: output/
+
+                # --------------------------------------------------
+      # COMMIT OUTPUTS BACK TO GITHUB
+      # --------------------------------------------------
+      - name: Commit updated output & data folders
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "jamesmedice"
+          git config user.email "tiago.sllater@github.com"
+
+          # Add anything produced by the notebooks
+          git add data/ || true
+          git commit -m "Update pipeline output [skip ci]" || true
+          
+          git pull --rebase || true
+          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} HEAD:${{ github.ref }} || true

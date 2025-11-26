@@ -1,8 +1,8 @@
-name: Notebook Report Pipeline
+name: Hourly Report Pipeline
 
 on:
   schedule:
-    - cron: "*/20 14-22 * * 1-5"
+    - cron: "0 */1 14-22 * 1-5"
   workflow_dispatch:
 
 permissions:
@@ -37,59 +37,21 @@ jobs:
       - name: Create required folders
         run: |
           mkdir -p output
-          mkdir -p output/hotscore
-          mkdir -p output/hotstocks
-          mkdir -p output/volumespike
-          mkdir -p output/momentum
-          mkdir -p output/recommendations
-          mkdir -p output/top20
-          mkdir -p output/runtime
+          mkdir -p output/topscore
+          mkdir -p output/topheatmap
           mkdir -p output/hourly
-          mkdir -p data
-          mkdir -p data/daily
-          mkdir -p data/averages
-          mkdir -p data/hotscore
-
-      - name: Run 02
-        run: |
-          mkdir -p output
-          papermill "02-daily_stock_recommendations_yahoo.ipynb" \
-            "output/run_02_$(date +'%Y%m%d_%H%M').ipynb"
-
-      - name: Run 03
-        run: |
-          papermill "03-average_stock_recommendations_yahoo.ipynb" \
-            "output/run_03_$(date +'%Y%m%d_%H%M').ipynb"
-
-      - name: Run 04
-        run: |
-          papermill "04-hotscore_stock_recommendations_yahoo.ipynb" \
-            "output/run_04_$(date +'%Y%m%d_%H%M').ipynb"
-
-      - name: Run 05
-        run: |
-          papermill "05_runtime_radar.ipynb" \
-            "output/run_05_$(date +'%Y%m%d_%H%M').ipynb"
 
       - name: Run 06
         run: |
           papermill "06_hourly_trend.ipynb" \
             "output/run_06_$(date +'%Y%m%d_%H%M').ipynb"
 
-      # --------------------------------------------------
-      # COMMIT OUTPUTS BACK TO GITHUB
-      # --------------------------------------------------
-      - name: Commit updated output & data folders
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git config user.name "jamesmedice"
-          git config user.email "tiago.sllater@github.com"
 
-          # Add anything produced by the notebooks
-          git add data/ || true
-          git commit -m "Update pipeline output [skip ci]" || true
-          
-          git pull --rebase || true
-          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} HEAD:${{ github.ref }} || true
+      # --------------------------------------------------
+      # Upload to Firebase
+      # --------------------------------------------------
+      - name: Upload Firebase Data
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: python scripts/upload_reports_2_firebase.py
 

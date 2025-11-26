@@ -2,7 +2,7 @@ name: 4 - Run HotScore Trend + Buy Recommendations
 
 on:
   schedule:
-    - cron: "30 22 * * 1-5"
+    - cron: "0 */2 * * 1-5"
   workflow_dispatch:
 
 jobs:

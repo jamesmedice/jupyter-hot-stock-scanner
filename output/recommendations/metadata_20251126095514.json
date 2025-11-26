@@ -1,0 +1,9 @@
+{
+  "timestamp": "20251126095514",
+  "top_symbols_count": 60,
+  "files": {
+    "trade_suggestions_csv": "output\\recommendations\\trade_suggestions_20251126095513.csv",
+    "heatmap_png": "output\\recommendations\\heatmap_hotscore_20251126095441.png",
+    "html_report": "output\\recommendations\\daily_report_20251126095514.html"
+  }
+}

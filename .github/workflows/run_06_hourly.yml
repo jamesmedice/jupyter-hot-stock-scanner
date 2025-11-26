@@ -2,7 +2,7 @@ name: 6 - Run Trend of the Hour
 
 on:
   schedule:
-    - cron: "0 14-22 * * 1-5"
+    - cron: "*/20 14-22 * * 1-5"
   workflow_dispatch:
 
 jobs:

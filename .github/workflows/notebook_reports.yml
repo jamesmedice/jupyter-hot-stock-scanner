@@ -1,4 +1,4 @@
-name: Full HotStock Pipeline
+name: Notebook Report Pipeline
 
 on:
   schedule:

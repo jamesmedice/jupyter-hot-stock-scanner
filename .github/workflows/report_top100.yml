@@ -1,4 +1,4 @@
-name: Hourly Report Pipeline
+name: TOP 100 REPORT PIPELINE
 
 on:
   schedule:

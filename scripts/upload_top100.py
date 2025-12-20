@@ -6,9 +6,9 @@ from pathlib import Path
 import firebase_admin
 from firebase_admin import credentials, storage
 import upload_to_firebase
-from upload_to_firebase import init_bucket, upload_folder_local
+from upload_to_firebase import init_bucket, upload_folder_local, upload_folder_local_withCSV
 
 bucket = init_bucket()
 # upload daily, weekly, monthly if present
-upload_folder_local(bucket, "output/top100", remote_prefix="market/")
+upload_folder_local_withCSV(bucket, "output/top100", remote_prefix="market/")
 upload_folder_local(bucket, "output/top100/charts", remote_prefix="market/")

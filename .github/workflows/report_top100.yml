@@ -37,7 +37,8 @@ jobs:
       - name: Create required folders
         run: |
           mkdir -p output
-          mkdir -p output/100
+          mkdir -p output/top100
+          mkdir -p output/top100/charts
 
       - name: Run 07
         run: |

@@ -2,7 +2,7 @@ name: Full HotStock Pipeline
 
 on:
   schedule:
-    - cron: "*/15 14-22 * * 1-5"
+    - cron: "*/40 14-22 * * 1-5"
   workflow_dispatch:
     
 permissions:
@@ -40,6 +40,7 @@ jobs:
           mkdir -p output/volumespike
           mkdir -p output/momentum
           mkdir -p output/recommendations
+          mkdir -p output/periods 
           mkdir -p output/top20
           mkdir -p output/runtime
           mkdir -p output/hourly

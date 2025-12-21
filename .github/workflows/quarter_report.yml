@@ -1,8 +1,8 @@
-name: Hourly Report Pipeline
+name: QUARTER REPORT PIPELINE
 
 on:
   schedule:
-    - cron: "0 14-22 * * 1-5"
+    - cron: "0 10 1-7 * 1"
   workflow_dispatch:
 
 permissions:
@@ -37,14 +37,18 @@ jobs:
       - name: Create required folders
         run: |
           mkdir -p output
-          mkdir -p output/topscore
-          mkdir -p output/topheatmap
-          mkdir -p output/hourly
+          mkdir -p output/cash_flow
+          mkdir -p output/dividends
 
-      - name: Run 06
+      - name: Run 08
         run: |
-          papermill "06_hourly_trend.ipynb" \
-            "output/run_06_$(date +'%Y%m%d_%H%M').ipynb"
+          papermill "08_dividends.ipynb" \
+            "output/08_dividends$(date +'%Y%m%d_%H%M').ipynb"
+
+      - name: Run 09
+        run: |
+          papermill "09_cash_flow.ipynb" \
+            "output/09_cash_flow$(date +'%Y%m%d_%H%M').ipynb"
 
 
       # --------------------------------------------------
@@ -53,5 +57,5 @@ jobs:
       - name: Upload Firebase Data
         env:
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-        run: python scripts/upload_reports_2_firebase.py
+        run: python scripts/upload_quarter.py
 

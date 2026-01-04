@@ -12,3 +12,4 @@ scikit-learn
 joblib
 tqdm
 firebase_admin
+xgboost

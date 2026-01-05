@@ -1,4 +1,4 @@
-name: Hourly Report Pipeline
+name: HOURLY REPORT PIPELINE
 
 on:
   schedule:

@@ -1,4 +1,4 @@
-name: Full HotStock Pipeline
+name: FULL HOTSTOCK PIPELINE
 
 on:
   schedule:

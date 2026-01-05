@@ -1,8 +1,8 @@
-name: QUARTER REPORT PIPELINE
+name: CASH FLOW REPORT PIPELINE
 
 on:
   schedule:
-    - cron: "0 10 1-7 * 1"
+    - cron: "0 11 1-7 * 1"
   workflow_dispatch:
 
 permissions:
@@ -37,12 +37,12 @@ jobs:
       - name: Create required folders
         run: |
           mkdir -p output
-          mkdir -p output/dividends
+          mkdir -p output/cash_flow
 
-      - name: Run 08
+      - name: Run 09
         run: |
-          papermill "08_dividends.ipynb" \
-            "output/08_dividends$(date +'%Y%m%d_%H%M').ipynb"
+          papermill "09_cash_flow.ipynb" \
+            "output/09_cash_flow$(date +'%Y%m%d_%H%M').ipynb"
 
       # --------------------------------------------------
       # Upload to Firebase
@@ -50,5 +50,5 @@ jobs:
       - name: Upload Firebase Data
         env:
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-        run: python scripts/upload_quarter.py
+        run: python scripts/upload_cash_flow.py
 

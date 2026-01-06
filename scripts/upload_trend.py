@@ -9,4 +9,4 @@ import upload_to_firebase
 from upload_to_firebase import init_bucket, upload_folder_local, upload_folder_local_withCSV
 
 bucket = init_bucket()
-upload_folder_local_withCSV(bucket, "output/dividends", remote_prefix="market/")
+upload_folder_local_withCSV(bucket, "output/trend", remote_prefix="market/")

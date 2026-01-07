@@ -2,7 +2,7 @@ name: CLASSIFICATION REPORT PIPELINE
 
 on:
   schedule:
-    - cron: "1 15,17,19,21 * * 1-5"
+    - cron: "10 15,17,19,21 * * 1-5"
   workflow_dispatch:
 
 permissions:

@@ -2,7 +2,7 @@ name: FULL HOTSTOCK PIPELINE
 
 on:
   schedule:
-    - cron: "*/40 14-22 * * 1-5"
+    - cron: "30 14-22 * * 1-5"
   workflow_dispatch:
     
 permissions:

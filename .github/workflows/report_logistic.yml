@@ -1,0 +1,55 @@
+name: LOGISTIC REGRESSION REPORT PIPELINE
+
+on:
+  schedule:
+    - cron: "20 15,17,19,21 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install jupyter ipykernel papermill firebase-admin
+
+      - name: Install Jupyter Kernel
+        run: python -m ipykernel install --user --name python3
+
+      # --------------------------------------------------
+      # RUN ALL NOTEBOOKS — they create CSV/PNG output
+      # --------------------------------------------------
+      - name: Create required folders
+        run: |
+          mkdir -p output
+          mkdir -p output/logistic_regression
+
+      - name: Run 07
+        run: |
+          papermill "012_logistic_reg_AI.ipynb" \
+            "output/012_logistic_reg_AI$(date +'%Y%m%d_%H%M').ipynb"
+
+
+      # --------------------------------------------------
+      # Upload to Firebase
+      # --------------------------------------------------
+      - name: Upload Firebase Data
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: python scripts/upload_logistic_regression.py
+

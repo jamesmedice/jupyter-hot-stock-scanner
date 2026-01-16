@@ -42,6 +42,7 @@ jobs:
           mkdir -p output/recommendations
           mkdir -p output/periods 
           mkdir -p output/top20
+          mkdir -p output/top20movers
           mkdir -p output/runtime
           mkdir -p output/hourly
           mkdir -p output/topscore

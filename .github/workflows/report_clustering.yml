@@ -37,7 +37,6 @@ jobs:
       - name: Create required folders
         run: |
           ls -lah
-          ls -lah /data
           mkdir -p output
           mkdir -p output/kmeans
 

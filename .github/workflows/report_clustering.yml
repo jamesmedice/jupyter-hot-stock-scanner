@@ -66,6 +66,7 @@ jobs:
 
           # Add anything produced by the notebooks
           git add data/ || true
+          git status
           git commit -m "Update pipeline output [skip ci]" || true
           
           git pull --rebase || true

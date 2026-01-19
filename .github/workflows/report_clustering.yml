@@ -54,6 +54,12 @@ jobs:
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
         run: python scripts/upload_clustering.py
 
+    
+      - name: List files in data/kmeans
+        run: |
+          echo "Listing files in data/kmeans:"
+          ls -lah data/kmeans
+
       # --------------------------------------------------
       # COMMIT OUTPUTS BACK TO GITHUB
       # --------------------------------------------------

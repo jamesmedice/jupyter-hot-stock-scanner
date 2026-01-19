@@ -72,9 +72,11 @@ jobs:
           git config user.email "tiago.sllater@github.com"
 
           git ls-files -v data/kmeans
-          git update-index --no-skip-worktree data/kmeans/kmeans_watchlist.csv
-          git update-index --no-assume-unchanged data/kmeans/kmeans_watchlist.csv 
-          git add data/kmeans/kmeans_watchlist.csv
+
+          git update-index --no-assume-unchanged data/kmeans/kmeans_watchlist.csv
+          git update-index --really-refresh
+          git add -u data/kmeans/kmeans_watchlist.csv
+          
           git status
 
           git add data/ || true

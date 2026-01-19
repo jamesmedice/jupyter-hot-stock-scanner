@@ -72,8 +72,10 @@ jobs:
           git config user.name "jamesmedice"
           git config user.email "tiago.sllater@github.com"
 
-          # Add anything produced by the notebooks
-          git add -f data/kmeans/kmeans_watchlist.csv || true
+          cd data/kmeans
+          git add kmeans_watchlist.csv
+          git commit -m "Update kmeans output [skip ci]"
+          cd ../../
           git add data/ || true
           git status
           git commit -m "Update pipeline output [skip ci]" || true

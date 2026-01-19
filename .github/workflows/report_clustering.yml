@@ -71,10 +71,7 @@ jobs:
           git config user.name "jamesmedice"
           git config user.email "tiago.sllater@github.com"
 
-          cd data/kmeans
-          git add kmeans_watchlist.csv
-          git commit -m "Update kmeans output [skip ci]"
-          cd ../../
+          git sparse-checkout add data/kmeans
           git add data/ || true
           git status
           git commit -m "Update pipeline output [skip ci]" || true

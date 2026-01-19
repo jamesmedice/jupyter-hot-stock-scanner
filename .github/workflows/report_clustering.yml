@@ -71,13 +71,12 @@ jobs:
           git config user.name "jamesmedice"
           git config user.email "tiago.sllater@github.com"
 
-          git update-index --skip-worktree data/kmeans/...
           git ls-files -v data/kmeans
           git update-index --no-skip-worktree data/kmeans/kmeans_watchlist.csv
           git update-index --no-assume-unchanged data/kmeans/kmeans_watchlist.csv 
           git add data/kmeans/kmeans_watchlist.csv
           git status
-          
+
           git add data/ || true
           git status
           git commit -m "Update pipeline output [skip ci]" || true

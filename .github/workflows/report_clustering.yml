@@ -36,9 +36,12 @@ jobs:
       # --------------------------------------------------
       - name: Create required folders
         run: |
+          ls -lah
           mkdir -p output
           mkdir -p output/kmeans
+          mkdir -p data
           mkdir -p data/kmeans
+
 
       - name: Run 07
         run: |

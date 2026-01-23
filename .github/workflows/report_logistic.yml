@@ -39,7 +39,7 @@ jobs:
           mkdir -p output
           mkdir -p output/logistic_regression
 
-      - name: Run 07
+      - name: Run 012
         run: |
           papermill "012_logistic_reg_AI.ipynb" \
             "output/012_logistic_reg_AI$(date +'%Y%m%d_%H%M').ipynb"

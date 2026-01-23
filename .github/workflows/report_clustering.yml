@@ -41,7 +41,7 @@ jobs:
           mkdir -p output/kmeans
 
 
-      - name: Run 07
+      - name: Run 014
         run: |
           papermill "014_kmeans_AI.ipynb" \
             "output/014_kmeans_AI$(date +'%Y%m%d_%H%M').ipynb"

@@ -39,7 +39,7 @@ jobs:
           mkdir -p output
           mkdir -p output/ranking
 
-      - name: Run 09
+      - name: Run 010
         run: |
           papermill "010_ranking_lab_AI.ipynb" \
             "output/010_ranking_lab_AI$(date +'%Y%m%d_%H%M').ipynb"

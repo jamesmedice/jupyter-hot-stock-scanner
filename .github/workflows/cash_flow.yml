@@ -2,7 +2,7 @@ name: CASH FLOW REPORT PIPELINE
 
 on:
   schedule:
-    - cron: "0 14 1-7 * 1"
+    - cron: "30 15 * * 2"
   workflow_dispatch:
 
 permissions:

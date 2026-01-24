@@ -2,7 +2,7 @@ name: QUARTER REPORT PIPELINE
 
 on:
   schedule:
-    - cron: "0 10 1-7 * 1"
+    - cron: "30 15 * * 1"
   workflow_dispatch:
 
 permissions:

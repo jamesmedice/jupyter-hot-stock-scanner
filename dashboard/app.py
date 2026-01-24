@@ -11,10 +11,14 @@ st.set_page_config(
 
 st.header("HOT STOCK MARKET", divider="gray")  
 
-confidence_tab = st.tabs(["Stock's Filter"])[0]
+confidence_tab, final_rank = st.tabs(["Hot Stock's Filter", "Final Rank Filter"])
 
-from interesting_stock  import render_stock_tab
+from interesting_stock  import render_stock_tab as render_confidence_tab
 
 with confidence_tab:
-    render_stock_tab()
+    render_confidence_tab()
 
+from final_rank import render_stock_tab as render_final_rank_tab
+
+with final_rank:
+    render_final_rank_tab()

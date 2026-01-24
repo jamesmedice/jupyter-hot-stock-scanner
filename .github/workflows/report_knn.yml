@@ -40,6 +40,7 @@ jobs:
           mkdir -p output
           mkdir -p output/kmeans
           mkdir -p output/random_forest
+          mkdir -p output/knn
 
 
       - name: Run 016
@@ -50,8 +51,8 @@ jobs:
 
       - name: Run 017
         run: |
-          papermill "016_random_forest.ipynb" \
-            "output/016_random_forest$(date +'%Y%m%d_%H%M').ipynb"
+          papermill "017_knn_lab.ipynb" \
+            "output/017_knn_lab$(date +'%Y%m%d_%H%M').ipynb"
 
 
       # --------------------------------------------------

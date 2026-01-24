@@ -10,4 +10,5 @@ from upload_to_firebase import init_bucket, upload_folder_local, upload_folder_l
 
 bucket = init_bucket()
 upload_folder_local_withCSV(bucket, "output/kmeans", remote_prefix="market/")
+upload_folder_local_withCSV(bucket, "output/knn", remote_prefix="market/")
 upload_folder_local_withCSV(bucket, "output/random_forest", remote_prefix="market/")

@@ -34,22 +34,8 @@ jobs:
       # --------------------------------------------------
       # RUN ALL NOTEBOOKS — they create CSV/PNG output
       # --------------------------------------------------
-      - name: Create required folders
-        run: |
-          ls -lah
-          mkdir -p output
-          mkdir -p output/kmeans
-          mkdir -p output/random_forest
-          mkdir -p output/knn
 
-
-      - name: Run 016
-        run: |
-          papermill "016_random_forest.ipynb" \
-            "output/016_random_forest$(date +'%Y%m%d_%H%M').ipynb"
-
-
-      - name: Run 017
+      - name: Run 00
         run: |
           papermill "00-outcome_data_cleaner.ipynb" \
             "output/00-outcome_data_cleaner$(date +'%Y%m%d_%H%M').ipynb"

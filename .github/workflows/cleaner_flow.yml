@@ -33,6 +33,7 @@ jobs:
 
       - name: Create required folders
         run: |
+          mkdir -p output
           mkdir -p data/recommendations
           mkdir -p data/suggestions
 

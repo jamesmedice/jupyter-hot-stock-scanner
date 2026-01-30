@@ -1,10 +1,13 @@
 import streamlit as st
 import plotly.express as px
 import pandas as pd
+import os
+
+BUCKET_NAME = os.environ.get("BUCKET_NAME", "bkt-ita-pocdemodatalabs-dev-001-logs-test")
 
 def render_stock_tab():
 
-    df = pd.read_csv("../data/kmeans/interesting_stocks.csv")
+    df = pd.read_csv(f"gs//{BUCKET_NAME}/interesting_stocks.csv")
 
     # Compute trade score
     df["trade_score"] = (

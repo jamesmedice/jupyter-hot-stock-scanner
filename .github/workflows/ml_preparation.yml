@@ -1,0 +1,66 @@
+name: ML PREPARATION PIPELINE
+
+on:
+  schedule:
+    - cron: "30 17,21 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install jupyter ipykernel papermill firebase-admin
+
+      - name: Install Jupyter Kernel
+        run: python -m ipykernel install --user --name python3
+
+      # --------------------------------------------------
+      # RUN ALL NOTEBOOKS — they create CSV/PNG output
+      # --------------------------------------------------
+      - name: Create required folders
+        run: |
+          mkdir -p ml
+
+      - name: Run 06
+        run: |
+          papermill "100_ml_prepare_data.ipynb" \
+            "output/100_ml_prepare_data$(date +'%Y%m%d_%H%M').ipynb"
+
+      # --------------------------------------------------
+      # COMMIT OUTPUTS BACK TO GITHUB
+      # --------------------------------------------------
+      - name: Commit updated output & data folders
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "jamesmedice"
+          git config user.email "tiago.sllater@github.com"
+
+          git ls-files -v ml      
+          git commit -m "ml preparation"      
+
+          git status
+
+          # Add anything produced by the notebooks
+          git add ml/ || true
+          git commit -m "Update pipeline output [skip ci]" || true
+          
+          git pull --rebase || true
+          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} HEAD:${{ github.ref }} || true

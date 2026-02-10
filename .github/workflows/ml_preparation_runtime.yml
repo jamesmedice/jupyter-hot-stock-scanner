@@ -39,7 +39,7 @@ jobs:
           mkdir -p ml
           mkdir -p output
 
-      - name: Run 06
+      - name: Run 101
         run: |
           papermill "101_ml_prepare_runtime.ipynb" \
             "output/101_ml_prepare_runtime$(date +'%Y%m%d_%H%M').ipynb"

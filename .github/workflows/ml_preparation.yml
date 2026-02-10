@@ -54,7 +54,8 @@ jobs:
           git config user.name "jamesmedice"
           git config user.email "tiago.sllater@github.com"
 
-          git ls-files -v ml      
+          git ls-files -v ml     
+          git add ml/ || true 
           git commit -m "ml preparation"      
 
           git status

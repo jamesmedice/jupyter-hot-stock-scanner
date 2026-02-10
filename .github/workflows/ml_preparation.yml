@@ -37,6 +37,7 @@ jobs:
       - name: Create required folders
         run: |
           mkdir -p ml
+          mkdir -p output
 
       - name: Run 06
         run: |

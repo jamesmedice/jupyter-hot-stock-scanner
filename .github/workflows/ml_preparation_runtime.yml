@@ -1,4 +1,4 @@
-name: ML PREPARATION PIPELINE
+name: ML PREPARATION RUNTIME PIPELINE
 
 on:
   schedule:

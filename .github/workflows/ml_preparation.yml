@@ -54,15 +54,16 @@ jobs:
           git config user.name "jamesmedice"
           git config user.email "tiago.sllater@github.com"
 
+          # Ensure files are tracked normally
+          git update-index --no-assume-unchanged ml/features_base.csv || true
+          git update-index --no-assume-unchanged ml/runtimes.csv || true
+
           git ls-files -v ml     
+
           git add ml/ || true 
           git commit -m "ml preparation"      
 
           git status
-
-          # Add anything produced by the notebooks
-          git add ml/ || true
-          git commit -m "Update pipeline output [skip ci]" || true
           
           git pull --rebase || true
           git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} HEAD:${{ github.ref }} || true

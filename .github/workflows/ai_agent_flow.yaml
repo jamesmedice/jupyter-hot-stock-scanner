@@ -1,4 +1,4 @@
-name: Hourly Quant Engine
+name: Agent Engine
 
 on:
   schedule:

@@ -33,7 +33,7 @@ jobs:
         run: |
           mkdir -p reports
 
-      - name: run engine agent
+      - name: RUN ENGINE AGENT
         run: python engine/main.py
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

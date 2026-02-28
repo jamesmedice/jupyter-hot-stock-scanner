@@ -6,7 +6,7 @@ from reporter import save_report
 
 def run():
 
-    df = load_data("../ml/runtimes.csv")
+    df = load_data("ml/runtimes.csv")
 
     df = apply_filters(df)
 

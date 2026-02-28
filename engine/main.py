@@ -27,7 +27,6 @@ def run():
         ]
     ].to_dict(orient="records")
 
-
     ai_output = ask_ai(candidates)
 
     report_path = save_report(ai_output)

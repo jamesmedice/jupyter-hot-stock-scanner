@@ -26,12 +26,10 @@ jobs:
       - name: Install kernel
         run: python -m ipykernel install --user --name python3
 
-      # --------------------------------------------------
-      # 🔥 CRITICAL FIX — Create all folders notebooks use
-      # --------------------------------------------------
       - name: Create required folders
         run: |
           mkdir -p reports
+          ls -la
 
       - name: RUN ENGINE AGENT
         run: python engine/main.py

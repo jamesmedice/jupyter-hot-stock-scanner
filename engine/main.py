@@ -14,9 +14,9 @@ def run():
 
     ranked = compute_scores(df)
 
-    top50 = ranked.head(50)
+    top10 = ranked.head(10)
 
-    candidates = top50[
+    candidates = top10[
         [
             "symbol",
             "marketCap",
@@ -29,13 +29,13 @@ def run():
         ]
     ].to_dict(orient="records")
 
-    print(f"Top 50 candidates prepared for AI:\n{json.dumps(candidates, indent=2)}")
+    print(f"Top 10 candidates prepared for AI:\n{json.dumps(candidates, indent=2)}")
 
-    #ai_output = ask_ai(candidates)
+    ai_output = ask_ai(candidates)
 
-    #report_path = save_report(ai_output)
+    report_path = save_report(ai_output)
 
-    #print("Report saved to:", report_path)
+    print("Report saved to:", report_path)
 
 
 if __name__ == "__main__":

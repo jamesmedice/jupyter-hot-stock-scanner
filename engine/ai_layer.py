@@ -12,7 +12,7 @@ def ask_ai(candidates):
     payload = json.dumps(candidates, indent=2)
 
     response = client.chat.completions.create(
-        model="gpt-5",  # replace with exact slug from GitHub marketplace
+        model="gpt-5-mini",  
         temperature=0.2,
         messages=[
             {

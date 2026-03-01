@@ -31,6 +31,8 @@ def run():
 
     ai_output = ask_ai(candidates)
 
+    print("AI Output:\n", ai_output)
+
     report_path = save_report(ai_output)
 
     print("Report saved to:", report_path)

@@ -29,8 +29,6 @@ def run():
         ]
     ].to_dict(orient="records")
 
-    print(f"Top 10 candidates prepared for AI:\n{json.dumps(candidates, indent=2)}")
-
     ai_output = ask_ai(candidates)
 
     report_path = save_report(ai_output)

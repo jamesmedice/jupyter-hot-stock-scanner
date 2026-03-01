@@ -3,7 +3,7 @@ import json
 from openai import OpenAI
 
 def ask_ai(candidates):
-
+    
     client = OpenAI(
         api_key=os.environ["GITHUB_TOKEN"],
         base_url="https://models.github.ai/inference"

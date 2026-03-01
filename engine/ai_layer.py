@@ -3,13 +3,15 @@ import json
 from openai import OpenAI
 
 def ask_ai(candidates):
-    
+
     client = OpenAI(
         api_key=os.environ["GITHUB_TOKEN"],
         base_url="https://models.github.ai/inference"
     )
 
     payload = json.dumps(candidates, indent=2)
+
+    print(f"Payload sent to AI: {payload}")
 
     response = client.chat.completions.create(
         model="gpt-5-mini",  

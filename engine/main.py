@@ -1,3 +1,5 @@
+import json
+
 from loader import load_data
 from filters import apply_filters
 from scoring import compute_scores
@@ -27,11 +29,13 @@ def run():
         ]
     ].to_dict(orient="records")
 
-    ai_output = ask_ai(candidates)
+    print(f"Top 50 candidates prepared for AI:\n{json.dumps(candidates, indent=2)}")
 
-    report_path = save_report(ai_output)
+    #ai_output = ask_ai(candidates)
 
-    print("Report saved to:", report_path)
+    #report_path = save_report(ai_output)
+
+    #print("Report saved to:", report_path)
 
 
 if __name__ == "__main__":

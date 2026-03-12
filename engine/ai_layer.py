@@ -26,7 +26,7 @@ def ask_ai(candidates, model="grok-3-mini", items=10):
                     "2) Penalize extreme volatility "
                     "3) Favor liquid large-cap breakouts "
                     "4) Return the top {items} symbols "
-                    "5) Provide concise reasoning per stock in html."
+                    "5) Provide the entire answer in .md format."
                 )
             },
             {

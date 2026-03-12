@@ -19,7 +19,7 @@ def get_client(model: str):
     #token = os.environ[config["env_key"]]
     token = os.environ["GITHUB_TOKEN"],
 
-    if provider == Provider.OPENAI_COMPAT:
+    if provider == Provider.OPENAI:
         return OpenAI(
             base_url=endpoint,
             api_key=token,

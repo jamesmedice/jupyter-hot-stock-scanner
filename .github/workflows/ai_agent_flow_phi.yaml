@@ -36,7 +36,7 @@ jobs:
           ls -la
 
       - name: RUN ENGINE AGENT
-        run: python engine/gpt.py
+        run: python engine/phi4.py
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

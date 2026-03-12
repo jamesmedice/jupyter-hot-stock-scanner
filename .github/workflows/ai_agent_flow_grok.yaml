@@ -26,6 +26,7 @@ jobs:
         run: |
           pip install pandas numpy openai
           pip install jupyter ipykernel papermill firebase-admin
+          pip install azure-ai-inference azure-core
 
       - name: Install kernel
         run: python -m ipykernel install --user --name python3

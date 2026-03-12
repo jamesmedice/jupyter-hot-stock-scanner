@@ -1,4 +1,4 @@
-name: AGENT ENGINE [GROK{grok-3-mini}]
+name: AGENT ENGINE [GPT{gpt-5-mini}]
 
 on:
   schedule:
@@ -36,7 +36,7 @@ jobs:
           ls -la
 
       - name: RUN ENGINE AGENT
-        run: python engine/grok.py
+        run: python engine/gpt.py
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

@@ -2,7 +2,7 @@ import os
 import json
 from openai import OpenAI
 
-def ask_ai(candidates, model="grok-3-mini"):
+def ask_ai(candidates, model="grok-3-mini", items=10):
 
     client = OpenAI(
         api_key=os.environ["GITHUB_TOKEN"],
@@ -25,8 +25,8 @@ def ask_ai(candidates, model="grok-3-mini"):
                     "1) Remove unstable pump candidates "
                     "2) Penalize extreme volatility "
                     "3) Favor liquid large-cap breakouts "
-                    "4) Return the top 20 symbols "
-                    "5) Provide concise reasoning per stock."
+                    "4) Return the top {items} symbols "
+                    "5) Provide concise reasoning per stock in html."
                 )
             },
             {

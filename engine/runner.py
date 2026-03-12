@@ -6,7 +6,7 @@ from scoring import compute_scores
 from ai_layer import ask_ai
 from reporter import save_report
 
-def run(model):
+def run(model, items=10):
 
     df = load_data("ml/runtimes.csv")
 
@@ -14,7 +14,7 @@ def run(model):
 
     ranked = compute_scores(df)
 
-    top10 = ranked.head(10)
+    top10 = ranked.head(items)
 
     candidates = top10[
         [
@@ -29,7 +29,7 @@ def run(model):
         ]
     ].to_dict(orient="records")
 
-    ai_output = ask_ai(candidates, model)
+    ai_output = ask_ai(candidates, model, items)
 
     print("AI Output:\n", ai_output)
 

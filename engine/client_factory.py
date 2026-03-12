@@ -17,7 +17,8 @@ def get_client(model: str):
     provider = config["provider"]
     endpoint = config["endpoint"]
     #token = os.environ[config["env_key"]]
-    token = os.environ["GITHUB_TOKEN"],
+    token = os.environ["GITHUB_TOKEN"]
+    print(token, type(token))
 
     if provider == Provider.OPENAI:
         return OpenAI(

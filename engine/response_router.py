@@ -25,7 +25,7 @@ def get_response(model: str, client, messages):
     config = MODEL_REGISTRY[model]
     provider = config["provider"]
 
-    if provider == Provider.OPENAI_COMPAT:
+    if provider == Provider.OPENAI:
 
         response = client.chat.completions.create(
             model=model,

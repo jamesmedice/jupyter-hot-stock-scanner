@@ -8,8 +8,8 @@ class Provider(str, Enum):
 
 
 MODEL_REGISTRY = {
-    "xai/grok-3-mini": {
-        "provider": Provider.AZURE,
+    "grok-3-mini": {
+        "provider": Provider.OPENAI,
         "endpoint": "https://models.github.ai/inference",
         "env_key": "GITHUB_TOKEN"
     },

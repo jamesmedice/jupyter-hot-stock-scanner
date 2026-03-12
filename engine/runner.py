@@ -6,7 +6,7 @@ from scoring import compute_scores
 from ai_layer import ask_ai
 from reporter import save_report
 
-def run():
+def run(model):
 
     df = load_data("ml/runtimes.csv")
 
@@ -29,14 +29,10 @@ def run():
         ]
     ].to_dict(orient="records")
 
-    ai_output = ask_ai(candidates)
+    ai_output = ask_ai(candidates, model)
 
     print("AI Output:\n", ai_output)
 
     report_path = save_report(ai_output)
 
     print("Report saved to:", report_path)
-
-
-if __name__ == "__main__":
-    run()

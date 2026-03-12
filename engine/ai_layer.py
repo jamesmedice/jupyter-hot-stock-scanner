@@ -2,7 +2,7 @@ import os
 import json
 from openai import OpenAI
 
-def ask_ai(candidates):
+def ask_ai(candidates, model="grok-3-mini"):
 
     client = OpenAI(
         api_key=os.environ["GITHUB_TOKEN"],
@@ -14,7 +14,7 @@ def ask_ai(candidates):
     print(f"Payload sent to AI: {payload}")    
 
     response = client.chat.completions.create(
-        model="grok-3-mini",  
+        model=model,  
         temperature=0.2,
         messages=[
             {

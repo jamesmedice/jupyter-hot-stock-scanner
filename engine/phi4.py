@@ -7,7 +7,7 @@ from ai_layer import ask_ai
 from reporter import save_report
 import runner
 
-MODEL = 'openai/gpt-4o-mini'
+MODEL = 'microsoft/Phi-4-mini-reasoning'
 
 if __name__ == "__main__":
     runner.run(model=MODEL)

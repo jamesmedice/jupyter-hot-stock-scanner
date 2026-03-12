@@ -22,5 +22,10 @@ MODEL_REGISTRY = {
         "provider": Provider.AZURE,
         "endpoint": "https://models.github.ai/inference",
         "env_key": "GITHUB_TOKEN"
-    }
+    },
+    "meta/Meta-Llama-3.1-405B-Instruct": {
+        "provider": Provider.AZURE,
+        "endpoint": "https://models.github.ai/inference",
+        "env_key": "GITHUB_TOKEN"
+    },
 }

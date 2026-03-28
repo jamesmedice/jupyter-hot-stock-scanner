@@ -33,6 +33,6 @@ def run(model, items=10):
 
     print("AI Output:\n", ai_output)
 
-    report_path = save_report(ai_output)
+    report_path = save_report(model, ai_output)
 
     print("Report saved to:", report_path)

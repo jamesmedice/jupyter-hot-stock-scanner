@@ -43,7 +43,7 @@ jobs:
 
       - name: Verify reports folder
         run: |
-          cd  /reports
+          cd  reports
           ls -la
 
       - name: Upload Firebase Data

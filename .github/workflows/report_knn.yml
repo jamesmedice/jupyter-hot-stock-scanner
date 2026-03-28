@@ -2,7 +2,7 @@ name: KNN REPORT PIPELINE
 
 on:
   schedule:
-    - cron: "50 16,19,22 * * 1-5"
+    - cron: "50 16,18 * * 1-5"
   workflow_dispatch:
 
 permissions:

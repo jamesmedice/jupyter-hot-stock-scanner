@@ -2,7 +2,7 @@ name: TOP 100 REPORT PIPELINE
 
 on:
   schedule:
-    - cron: "*/5 14-22 * * 1-5"
+    - cron: "20 15-20 * * 1-5"
   workflow_dispatch:
 
 permissions:

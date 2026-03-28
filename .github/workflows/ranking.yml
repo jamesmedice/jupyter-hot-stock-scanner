@@ -2,7 +2,7 @@ name: RANKING REPORT PIPELINE
 
 on:
   schedule:
-    - cron: "10 18 * * 1,3,5"
+    - cron: "30 18 * * 1,3,5"
   workflow_dispatch:
 
 permissions:

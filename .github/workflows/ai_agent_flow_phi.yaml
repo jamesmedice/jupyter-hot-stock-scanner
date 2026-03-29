@@ -2,7 +2,7 @@ name: AGENT ENGINE [PHI{microsoft/Phi-4-mini-reasoning}]
 
 on:
   schedule:
-    - cron: '10 16 * * 1-5'
+    - cron: '10 16 * * 2,4'
   workflow_dispatch:
 
 permissions:

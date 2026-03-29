@@ -2,7 +2,7 @@ name: HOURLY REPORT PIPELINE
 
 on:
   schedule:
-    - cron: "25 16-20 * * 1-5"
+    - cron: "30 15-19 * * 1-5"
   workflow_dispatch:
 
 permissions:

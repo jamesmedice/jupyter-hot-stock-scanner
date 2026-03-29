@@ -2,7 +2,7 @@ name: AGENT ENGINE [GROK{grok-3-mini}]
 
 on:
   schedule:
-    - cron: '40 16 * * 1-5'
+    - cron: '40 16 * * 2,4'
   workflow_dispatch:
 
 permissions:

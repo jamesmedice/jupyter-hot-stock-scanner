@@ -24,4 +24,8 @@ MODEL_REGISTRY = {
         "provider": Provider.AZURE,
         "endpoint": "https://models.github.ai/inference"
     },
+    "cohere/cohere-command-a": {
+        "provider": Provider.AZURE,
+        "endpoint": "https://models.github.ai/inference"
+    },
 }

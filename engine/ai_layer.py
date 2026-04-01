@@ -11,7 +11,7 @@ def ask_ai(candidates, model, items=10):
 
     payload = json.dumps(candidates, indent=2)
 
-    print(f"Payload sent to AI:\n{payload}")
+    print(f"AI Payload >> \n\n{payload}")
 
     messages = build_messages(payload, items)
 

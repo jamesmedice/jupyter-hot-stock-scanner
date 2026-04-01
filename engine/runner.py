@@ -24,8 +24,7 @@ def run(model, items=10):
             "MomentumScore",
             "VolatilityScore",
             "TrendScore",
-            "RuntimeScore",
-            "base_score"
+            "RuntimeScore"
         ]
     ].to_dict(orient="records")
 

@@ -28,4 +28,8 @@ MODEL_REGISTRY = {
         "provider": Provider.AZURE,
         "endpoint": "https://models.github.ai/inference"
     },
+    "mistral-ai/mistral-small-2503": {
+        "provider": Provider.AZURE,
+        "endpoint": "https://models.github.ai/inference"
+    },
 }

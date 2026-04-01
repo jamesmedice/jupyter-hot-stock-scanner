@@ -1,4 +1,4 @@
-name: AGENT ENGINE [COHERE{cohere/cohere-command-a}]
+name: AGENT ENGINE [MISTRAL{mistral-ai/mistral-small-2503}]
 
 on:
   schedule:

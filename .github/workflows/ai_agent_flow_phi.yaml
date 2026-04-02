@@ -24,11 +24,11 @@ jobs:
 
       - name: Install dependencies
         run: |
+          pip install mistralai>=1.0.0
           pip show mistralai
           pip install pandas numpy openai
           pip install jupyter ipykernel papermill firebase-admin
           pip install azure-ai-inference azure-core
-          pip install mistralai>=1.0.0
 
       - name: Install kernel
         run: python -m ipykernel install --user --name python3

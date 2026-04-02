@@ -24,7 +24,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip show mistralai
           pip install pandas numpy openai
           pip install jupyter ipykernel papermill firebase-admin
           pip install azure-ai-inference azure-core          

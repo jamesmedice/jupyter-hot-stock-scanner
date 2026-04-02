@@ -1,4 +1,4 @@
-name: AGENT ENGINE [JAMBA{ai21-labs/AI21-Jamba-1.5-Large}]
+name: AGENT ENGINE [MAIDSR1{ai21-labs/microsoft/MAI-DS-R1}]
 
 on:
   schedule:
@@ -37,7 +37,7 @@ jobs:
           ls -la
 
       - name: RUN ENGINE AGENT
-        run: python engine/jamba.py
+        run: python engine/maidsr1.py
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

@@ -32,7 +32,7 @@ MODEL_REGISTRY = {
         "provider": Provider.AZURE,
         "endpoint": "https://models.github.ai/inference"
     },
-    "ai21-labs/AI21-Jamba-1.5-Large": {
+    "microsoft/MAI-DS-R1": {
         "provider": Provider.AZURE,
         "endpoint": "https://models.github.ai/inference"
     },

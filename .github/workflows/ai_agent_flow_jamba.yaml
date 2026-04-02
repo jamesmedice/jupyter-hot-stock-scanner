@@ -1,0 +1,52 @@
+name: AGENT ENGINE [JAMBA{ai21-labs/AI21-Jamba-1.5-Large}]
+
+on:
+  schedule:
+    - cron: '40 17 * * 2,4'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  models: read
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install pandas numpy openai
+          pip install jupyter ipykernel papermill firebase-admin
+          pip install azure-ai-inference azure-core
+
+      - name: Install kernel
+        run: python -m ipykernel install --user --name python3
+
+      - name: Create required folders
+        run: |
+          mkdir -p reports
+          ls -la
+
+      - name: RUN ENGINE AGENT
+        run: python engine/jamba.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Verify reports folder
+        run: |
+          cd  reports
+          ls -la
+
+      - name: Upload Firebase Data
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: python scripts/upload_agent_report_to_firebase.py

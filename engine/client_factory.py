@@ -8,7 +8,6 @@ from mistralai import Mistral, UserMessage, SystemMessage
 
 from models import MODEL_REGISTRY, Provider
 
-
 def get_client(model: str):
 
     if model not in MODEL_REGISTRY:
@@ -36,6 +35,6 @@ def get_client(model: str):
         return Mistral(
             api_key=token, 
             server_url=endpoint
-        )
+            )
 
     raise ValueError(f"Unsupported provider: {provider}")

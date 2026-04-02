@@ -24,8 +24,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install mistralai>=1.0.0
-          pip show mistralai
+          pip install mistralai==1.2.0
           pip install pandas numpy openai
           pip install jupyter ipykernel papermill firebase-admin
           pip install azure-ai-inference azure-core

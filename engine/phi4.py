@@ -7,7 +7,7 @@ from ai_layer import ask_ai
 from reporter import save_report
 import runner
 
-MODEL = 'microsoft/Phi-4-mini-reasoning'
+MODEL = 'microsoft/Phi-4'
 
 if __name__ == "__main__":
     runner.run(model=MODEL)

@@ -16,7 +16,7 @@ MODEL_REGISTRY = {
         "provider": Provider.OPENAI,
         "endpoint": "https://models.github.ai/inference"
     },
-    "microsoft/Phi-4-mini-reasoning": {
+    "microsoft/Phi-4": {
         "provider": Provider.AZURE,
         "endpoint": "https://models.github.ai/inference"
     },

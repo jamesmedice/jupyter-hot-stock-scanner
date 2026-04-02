@@ -11,6 +11,3 @@ MODEL = 'mistral-ai/mistral-small-2503'
 
 if __name__ == "__main__":
     runner.run(model=MODEL)
-
-
-

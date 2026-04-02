@@ -14,9 +14,9 @@ def run(model, items=10):
 
     ranked = compute_scores(df)
 
-    top10 = ranked.head(items)
+    top = ranked.head(items)
 
-    candidates = top10[
+    candidates = top[
         [
             "symbol",
             "marketCap",

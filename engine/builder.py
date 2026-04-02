@@ -11,9 +11,9 @@ Your task:
 3. Provide concise reasoning per stock
 
 Output rules:
-- Respond in HTML rich in CSS with blue, green, colors with shade
+- Respond in HTML, rich in CSS with blue, green, at least 5 dark colors with shade
 - Include a ranked list
-- Each stock must include a short reasoning paragraph
+- Each stock must include a very short reasoning paragraph
 """
 
     return [

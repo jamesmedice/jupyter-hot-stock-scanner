@@ -4,6 +4,7 @@ import os
 from openai import OpenAI
 from azure.ai.inference import ChatCompletionsClient
 from azure.core.credentials import AzureKeyCredential
+from mistralai import Mistral, UserMessage, SystemMessage
 
 from models import MODEL_REGISTRY, Provider
 
@@ -29,6 +30,12 @@ def get_client(model: str):
         return ChatCompletionsClient(
             endpoint=endpoint,
             credential=AzureKeyCredential(token),
+        )
+
+    if provider == Provider.MISTRAL:
+        return Mistral(
+            api_key=token, 
+            server_url=endpoint
         )
 
     raise ValueError(f"Unsupported provider: {provider}")

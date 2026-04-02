@@ -5,6 +5,7 @@ from enum import Enum
 class Provider(str, Enum):
     OPENAI = "openai_compat"
     AZURE = "azure"
+    MISTRAL = "Mistral"
 
 
 MODEL_REGISTRY = {
@@ -34,6 +35,10 @@ MODEL_REGISTRY = {
     },
     "microsoft/MAI-DS-R1": {
         "provider": Provider.AZURE,
+        "endpoint": "https://models.github.ai/inference"
+    },
+    "mistral-ai/Codestral-2501": {
+        "provider": Provider.MISTRAL,
         "endpoint": "https://models.github.ai/inference"
     },
 }

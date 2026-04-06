@@ -26,7 +26,7 @@ Design requirements:
 Layout:
 - Centered container with max-width
 - Title header: “Top Breakout Stocks”
-- Ranked list (1, 2, 3…)
+- Ranked list from 1 to 10
 - Each stock displayed in a card with:
   • Symbol (highlighted in green)
   • Key metrics (small row)
@@ -38,6 +38,7 @@ Styling:
 - Clean spacing
 - Use flexbox for layout
 - Highlight rank numbers clearly
+- Use max height and width with scroll
 
 Keep the design minimal, clean, and highly readable.
 """

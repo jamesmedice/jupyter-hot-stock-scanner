@@ -1,4 +1,4 @@
-name: HOURLY REPORT PIPELINE
+name: HOURLY REPORT PIPELINE (notebook reports)
 
 on:
   schedule:

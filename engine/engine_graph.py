@@ -124,7 +124,7 @@ def generate_bar_chart(df_subset):
         title="Top Hot Stocks"
     )
 
-    path = os.path.join(OUTPUT_DIR, "bar_chart.html")
+    path = os.path.join(OUTPUT_DIR, "bar_lang_graph.html")
     fig.write_html(path)
     return path
 

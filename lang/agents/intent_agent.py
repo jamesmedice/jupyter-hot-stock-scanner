@@ -14,15 +14,6 @@ def intent_agent(state):
     Extract trading parameters from:
 
     "{query}"
-
-    Return JSON:
-    {{
-        "min_hot": float,
-        "min_momentum": float,
-        "max_volatility": float,
-        "top_n": int,
-        "chart_type": "bar" | "heatmap" | "correlation"
-    }}
     """
 
     try:
@@ -38,6 +29,7 @@ def intent_agent(state):
         }
 
     return {
+        **state,   # 👈 CRITICAL FIX
         "filters": parsed,
-        "chart_type": parsed["chart_type"]
+        "chart_type": parsed.get("chart_type", "bar")
     }

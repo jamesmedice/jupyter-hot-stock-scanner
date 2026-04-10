@@ -22,8 +22,9 @@ df = pd.read_csv("ml/features_base.csv")
 token = os.environ["GITHUB_TOKEN"]
 
 llm = ChatOpenAI(
+    model="gpt-4o-mini",
     api_key=token,
-    model="gpt-4o-mini"
+    base_url="https://models.inference.ai.azure.com"
 )
 
 # ===============================

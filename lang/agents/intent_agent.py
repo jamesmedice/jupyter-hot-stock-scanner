@@ -11,15 +11,15 @@ def intent_agent(state):
     query = state["query"]
 
     prompt = f"""
-    Extract trading parameters from the query below.
+    Return ONLY valid JSON.
 
-    Return ONLY valid JSON (no text, no explanation).
+    DO NOT include markdown, stars, or explanations.
 
-    JSON format:
+    Format:
     {{
-        "min_hot": float,
-        "min_momentum": float,
-        "max_volatility": float,
+        "min_hot": float (0–1),
+        "min_momentum": float (0–1),
+        "max_volatility": float (0–1),
         "top_n": int,
         "chart_type": "bar" | "heatmap" | "correlation"
     }}

@@ -5,7 +5,7 @@ from agents.filter_agent import filter_agent
 from agents.chart_agent import chart_agent
 from agents.explain_agent import explain_agent
 
-from state import GraphState
+from state.schema import GraphState
 
 
 def build_graph():

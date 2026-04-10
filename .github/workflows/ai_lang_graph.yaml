@@ -24,11 +24,13 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install pandas numpy
-          pip install plotly scikit-learn
-          pip install openai python-dotenv 
-          pip install jupyter ipykernel papermill firebase-admin
-          pip install langgraph langchain langchain_openai
+          pip install \
+          pandas numpy plotly scikit-learn \
+          openai python-dotenv \
+          jupyter ipykernel papermill firebase-admin \
+          langchain==0.2.14 \
+          langgraph==0.2.19 \
+          langchain-openai==0.1.22
 
       - name: Install kernel
         run: python -m ipykernel install --user --name python3

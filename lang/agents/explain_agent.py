@@ -1,4 +1,5 @@
-from langchain.chat_models import ChatOpenAI
+#from langchain.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
 from config import MODEL_NAME, TEMPERATURE
 
 llm = ChatOpenAI(model=MODEL_NAME, temperature=TEMPERATURE)

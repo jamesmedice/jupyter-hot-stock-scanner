@@ -29,7 +29,7 @@ def intent_agent(state):
         }
 
     return {
-        **state,   # 🔥 CRITICAL (keeps query + df)
+        **state,
         "filters": parsed,
         "chart_type": parsed.get("chart_type", "bar")
     }

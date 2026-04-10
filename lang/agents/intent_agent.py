@@ -30,6 +30,7 @@ def intent_agent(state):
 
     try:
         response = llm.invoke(prompt).content
+        print("LLM RESPONSE:", response)
         parsed = json.loads(response)
 
     except Exception as e:

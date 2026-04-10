@@ -5,12 +5,11 @@ from agents.filter_agent import filter_agent
 from agents.chart_agent import chart_agent
 from agents.explain_agent import explain_agent
 
+from state import GraphState
+
 
 def build_graph():
-    class State(dict):
-        pass
-
-    builder = StateGraph(State)
+    builder = StateGraph(GraphState)
 
     builder.add_node("intent", intent_agent)
     builder.add_node("filter", filter_agent)

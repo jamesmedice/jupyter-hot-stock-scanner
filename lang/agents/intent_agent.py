@@ -17,7 +17,7 @@ def intent_agent(state):
     """
 
     try:
-        response = llm.predict(prompt)
+        response = llm.invoke(prompt).content   # FIX #2 (see below)
         parsed = json.loads(response)
     except:
         parsed = {
@@ -29,7 +29,7 @@ def intent_agent(state):
         }
 
     return {
-        **state,   # 👈 CRITICAL FIX
+        **state,   # 🔥 CRITICAL (keeps query + df)
         "filters": parsed,
         "chart_type": parsed.get("chart_type", "bar")
     }

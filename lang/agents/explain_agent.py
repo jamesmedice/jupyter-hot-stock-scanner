@@ -27,4 +27,9 @@ def explain_agent(state):
     - Risks
     """
 
-    return {"explanation": llm.predict(prompt)}
+    response = llm.invoke(prompt).content
+
+    return {
+        **state,
+        "explanation": response
+    }

@@ -4,8 +4,8 @@ from langchain_openai import ChatOpenAI
 from config import MODEL_NAME, TEMPERATURE
 
 
-token = os.environ["GITHUB_TOKEN"]
-llm = ChatOpenAI(model=MODEL_NAME, api_key=token, temperature=TEMPERATURE)
+token = os.environ["GITHUB_TOKEN"] 
+llm = ChatOpenAI(model=MODEL_NAME, api_key=token, temperature=TEMPERATURE, base_url="https://models.inference.ai.azure.com")
 
 def intent_agent(state):
     query = state["query"]

@@ -4,7 +4,7 @@ from config import MODEL_NAME, TEMPERATURE
 
 
 token = os.environ["GITHUB_TOKEN"]
-llm = ChatOpenAI(model=MODEL_NAME, api_key=token, temperature=TEMPERATURE)
+llm = ChatOpenAI(model=MODEL_NAME, api_key=token, temperature=TEMPERATURE, base_url="https://models.inference.ai.azure.com")
 
 def explain_agent(state):
     df = state["filtered_df"]

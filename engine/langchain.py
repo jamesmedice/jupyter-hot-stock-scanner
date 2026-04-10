@@ -5,7 +5,8 @@ import pandas as pd
 import plotly.express as px
 from typing import TypedDict, List, Dict, Any
 
-from langchain.chat_models import ChatOpenAI
+#from langchain.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
 from langgraph.graph import StateGraph
 
 

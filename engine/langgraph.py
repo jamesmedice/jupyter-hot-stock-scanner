@@ -11,7 +11,8 @@ import plotly.graph_objects as go
 
 from typing import TypedDict, Dict, Any
 
-from langchain.chat_models import ChatOpenAI
+#from langchain.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
 from langgraph.graph import StateGraph
 
 # ============================================

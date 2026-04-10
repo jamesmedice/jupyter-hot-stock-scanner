@@ -41,7 +41,7 @@ jobs:
           ls -la
 
       - name: RUN ENGINE AGENT
-        run: python engine/langchain.py
+        run: python engine/engine_chain.py
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

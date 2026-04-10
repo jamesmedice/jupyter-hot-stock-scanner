@@ -1,4 +1,4 @@
-name: AI LANG CHAIN ENGINE [GPT{gpt-4o-mini}]
+name: AI LANG GRAPH ENGINE [GPT{gpt-4o-mini}]
 
 on:
   schedule:
@@ -39,7 +39,7 @@ jobs:
           ls -la
 
       - name: RUN ENGINE AGENT
-        run: python engine/langchain.py
+        run: python engine/langgraph.py
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

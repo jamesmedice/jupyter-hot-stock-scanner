@@ -1,9 +1,11 @@
 import json
-#from langchain.chat_models import ChatOpenAI
+import os
 from langchain_openai import ChatOpenAI
 from config import MODEL_NAME, TEMPERATURE
 
-llm = ChatOpenAI(model=MODEL_NAME, temperature=TEMPERATURE)
+
+token = os.environ["GITHUB_TOKEN"]
+llm = ChatOpenAI(model=MODEL_NAME, api_key=token, temperature=TEMPERATURE)
 
 def intent_agent(state):
     query = state["query"]

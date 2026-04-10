@@ -1,6 +1,7 @@
 # ===============================
 # IMPORTS
 # ===============================
+import os
 import pandas as pd
 import plotly.express as px
 from typing import TypedDict, List, Dict, Any
@@ -17,7 +18,13 @@ df = pd.read_csv("ml/features_base.csv")
 # ===============================
 # LLM
 # ===============================
-llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+
+token = os.environ["GITHUB_TOKEN"]
+
+llm = ChatOpenAI(
+    api_key=token,
+    model="gpt-4o-mini"
+)
 
 # ===============================
 # STATE DEFINITION

@@ -30,7 +30,11 @@ df = pd.read_csv(DATA_PATH)
 # ============================================
 # LLM
 # ============================================
-llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+token = os.environ["GITHUB_TOKEN"]
+llm = ChatOpenAI(
+    api_key=token,
+    model="gpt-4o-mini"
+)
 
 # ============================================
 # STATE

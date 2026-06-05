@@ -1,0 +1,26 @@
+================================================================================
+INVESTMENT ANALYSIS SUMMARY
+================================================================================
+
+Analysis Date: 2026-06-05 11:58:13
+Companies Analyzed: 500
+Top Healthiest: 50
+
+KEY STATISTICS:
+- Average Health Score: 88.8/100
+- Average P/E Ratio: 16.66x
+- Average Profit Margin: 29.9%
+- Average ROE: 37.5%
+- Average Volatility: 0.826
+
+TOP 10 OVERALL PICKS:
+ 1. DUOL  | Score:   96.8 | P/E:  12.49 | Vol: 0.948
+ 2. PAAS  | Score:   94.1 | P/E:  16.74 | Vol: 0.790
+ 3. PATH  | Score:   92.3 | P/E:  19.45 | Vol: 0.657
+ 4. FSLR  | Score:   92.1 | P/E:  20.32 | Vol: 0.949
+ 5. NVO   | Score:   91.0 | P/E:  10.27 | Vol: 0.733
+ 6. BKNG  | Score:   90.8 | P/E:  22.07 | Vol: 1.000
+ 7. NEM   | Score:   89.9 | P/E:  14.05 | Vol: 0.856
+ 8. HBM   | Score:   88.5 | P/E:  18.04 | Vol: 0.622
+ 9. CRM   | Score:   88.0 | P/E:  21.87 | Vol: 0.931
+10. META  | Score:   87.3 | P/E:  22.83 | Vol: 0.964

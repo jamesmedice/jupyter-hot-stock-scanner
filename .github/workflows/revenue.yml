@@ -1,4 +1,4 @@
-name: VOLATILITY REPORT PIPELINE
+name: REVENUE REPORT PIPELINE
 
 on:
   schedule:

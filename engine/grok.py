@@ -7,7 +7,8 @@ from ai_layer import ask_ai
 from reporter import save_report
 import runner
 
-MODEL = 'grok-3-mini'
+#MODEL = 'grok-3-mini'
+MODEL = 'cohere/cohere-command-a'
 
 if __name__ == "__main__":
     runner.run(model=MODEL)
